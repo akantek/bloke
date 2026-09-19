@@ -14,6 +14,7 @@ include "ram.asm"
 include "constants.asm"
 include "vblank.asm"
 include "vdp.asm"
+include "keypad.asm"
 include "tilesheet.asm"
 
   ds $c000 - $, 0
