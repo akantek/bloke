@@ -60,5 +60,22 @@ intro:
   inc (hl)
   
 .vblank_trace_end:
+
+  ; Update sprites
+  ld a, INIT_NUM_SPRITES 
+  call loadSpriteAttributes
+
+  ; scan keyboard
+  call scan_keypad
+  ld e, a
+
+  ; if right
+  bit KEY_RIGHT_BIT, e
+  jr nz, .not_right_key
+
+  ld hl, sprite0_x
+  inc (hl)  
+
+.not_right_key:
   jp .loop
 
