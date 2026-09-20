@@ -1,3 +1,5 @@
+NUM_SPRITES:  equ 1
+
 intro:
   ; Initialize intro
   

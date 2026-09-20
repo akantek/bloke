@@ -50,6 +50,10 @@ VRAM_SPR_PATTERNS: equ $7800       ; Sprite Pattern Generator (SPG)
 SPRITE_VRAM_BANK:  equ 1
 SPRITE_VRAM_ADDR:  equ $0000
 
+; --- MSX1 SCREEN 2 Sprite Tables (Default Locations) ---
+VRAM_SCR2_SPR_ATTRIBS:  equ $1B00       ; Sprite Attribute Table (SAT) - 128 bytes
+VRAM_SCR2_SPR_PATTERNS: equ $3800       ; Sprite Pattern Generator (SPG) - 2048 bytes
+
 ; --- PPI (Programmable Peripheral Interface) ---
 ; Used for Keyboard scanning, Memory mapping, etc.
 PPI_PORT_B:       equ $A9         ; Read: Keyboard Column Status

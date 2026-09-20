@@ -4,14 +4,14 @@
 ; Any manual modifications will be overwritten.
 ; =================================================================
 
-tile_patterns_start:
-tile0_pattern:
-  defb %11011111    ; Row 0
-  defb %11011111    ; Row 1
-  defb %11011111    ; Row 2
-  defb %00000000    ; Row 3
-  defb %11111101    ; Row 4
-  defb %11111101    ; Row 5
-  defb %11111101    ; Row 6
-  defb %11111101    ; Row 7
-tile_patterns_end:
+sprite_patterns_start:
+bloke_running_left_pattern:
+  defb %00110000    ; Row 0
+  defb %00110000    ; Row 1
+  defb %00011100    ; Row 2
+  defb %01111010    ; Row 3
+  defb %00011000    ; Row 4
+  defb %00100100    ; Row 5
+  defb %00100010    ; Row 6
+  defb %00100000    ; Row 7
+sprite_patterns_end:

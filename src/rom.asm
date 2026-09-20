@@ -16,6 +16,7 @@ include "vblank.asm"
 include "vdp.asm"
 include "keypad.asm"
 include "tilesheet.asm"
+include "spritesheet.asm"
 
   ds $c000 - $, 0
 
