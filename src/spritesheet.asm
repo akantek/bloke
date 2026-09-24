@@ -5,7 +5,7 @@
 ; =================================================================
 
 sprite_patterns_start:
-bloke_running_left_pattern:
+bloke_left_0_pattern:
   defb %00110000    ; Row 0
   defb %00110000    ; Row 1
   defb %00011100    ; Row 2
@@ -14,4 +14,13 @@ bloke_running_left_pattern:
   defb %00100100    ; Row 5
   defb %00100010    ; Row 6
   defb %00100000    ; Row 7
+bloke_left_1_pattern:
+  defb %00110000    ; Row 0
+  defb %00110000    ; Row 1
+  defb %00011000    ; Row 2
+  defb %00011100    ; Row 3
+  defb %00111110    ; Row 4
+  defb %00111100    ; Row 5
+  defb %00100010    ; Row 6
+  defb %00000010    ; Row 7
 sprite_patterns_end:
