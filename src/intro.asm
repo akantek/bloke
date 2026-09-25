@@ -2,7 +2,8 @@ NUM_SPRITES:  equ 1
 
 intro:
   ; Initialize intro
-  
+  di
+ 
   ; Copy the initial tile pattern from ROM to RAM
   ld hl, tile0_pattern      ; Source: ROM address
   ld de, tile0_ram_buffer   ; Destination: RAM address (e.g., $C000)
@@ -77,6 +78,13 @@ intro:
 ; first col on BOTTOM is pattern id 0
 ; no need to set
 
+
+  ; Fill the whole row 20
+  ld a, 0                 ; A  = Tile ID to draw (e.g., Tile 0)
+  ld hl, $1A80            ; HL = VRAM address for Row 20, Column 0
+  ld b, 32                ; B  = 32 tiles (full width of the screen)
+  call draw_tile_row
+
   ei
 .loop:
   call wait_vsync        ; Spin until vblank is fired
@@ -125,6 +133,9 @@ intro:
   inc (hl)
 
 .vblank_trace_end:
+  ld hl, sprite0_x
+  dec (hl)
+
   ; -------------------------------------------------------------
   ; 3. KEYBOARD & MOVEMENT
   ; -------------------------------------------------------------
@@ -137,6 +148,7 @@ intro:
 
   ld hl, sprite0_x
   inc (hl)  
+  inc (hl)
 
 .not_right_key:
   jp .loop

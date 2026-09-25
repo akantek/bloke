@@ -96,5 +96,5 @@ init_sprite_attributes:
 
 sprite0_attributes_data:
   ;  Y,  X, Pat, Color
-  db 10, 10,   0,   15              ; Layer 1 (White = 15)
+  db 150, 10,   0,   4              ; Layer 1 (White = 15)
 

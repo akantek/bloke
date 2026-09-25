@@ -1,4 +1,48 @@
 ; ==============================================================================
+; Routine:      draw_tile_row
+; Description:  Fills a sequence of VRAM addresses with a single Tile ID.
+;               Extremely fast (24 T-states/byte), ideal for drawing floors or 
+;               walls while the screen display is disabled.
+;
+; [!] WARNING:  Interrupts MUST be disabled (execute 'di') before calling this
+;               routine. If a VBlank interrupt fires during the VDP address setup,
+;               the internal latch will corrupt and write data to the wrong VRAM
+;               location.
+;
+; Inputs:
+;   A  = Tile ID to draw
+;   HL = VRAM Start Address (e.g., $1800 for top-left of SCREEN 2 Name Table)
+;   B  = Number of sequential tiles to draw (1 to 256, where 0 = 256 tiles)
+;
+; Destroys:
+;   A, B, D
+; ==============================================================================
+draw_tile_row:
+  ; 1. Temporarily backup the Tile ID into D so we can use A for VDP setup
+  ld d, a
+
+  ; 2. Set up VDP VRAM Write Address
+  ld a, l
+  out (VDP_CONTROL_PORT), a   ; Send Low Byte of VRAM Address
+
+  ld a, h
+  and $3F                     ; Clear VDP command bits (6/7) to isolate the
+                              ; 14-bit VRAM address
+  or $40                      ; Set Bit 6 to enable VDP "Write VRAM" mode
+  out (VDP_CONTROL_PORT), a   ; Send High Byte and Latch Address
+
+  ; 3. Restore Tile ID to A for the fast loop
+  ld a, d
+
+  ; 4. Blast the data to the VDP
+.fill_loop:
+  out (VDP_DATA_PORT), a      ; Write Tile ID to VDP (11 T-states)
+  djnz .fill_loop             ; Decrement B, jump if not zero (13 T-states)
+
+  ret
+
+
+; ==============================================================================
 ; enable_8x8_sprites
 ; One-time VDP initialization to set Sprite Size to 8x8 pixels.
 ;
