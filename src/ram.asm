@@ -10,6 +10,11 @@ frame_count:   equ $C00B  ; 1 Byte
 ; ========================================================
 tile0_ram_buffer: equ $C00C  ; 8 bytes
 
+; --- Player Animation State ---
+player_anim_timer: equ $C014  ; 1 Byte (Counts 0 to 1)
+player_anim_frame: equ $C015  ; 1 Byte (Counts 0 to 3)
+player_direction:  equ $C016  ; 1 Byte (0 = Left base, 4 = Right base)
+
 ; ========================================================
 ; Shadow Sprite Attribute Table (SAT) in RAM
 ; 1 Sprite = 4 Bytes, 32 Sprites Max (128 Bytes Total)

@@ -9,18 +9,72 @@ bloke_left_0_pattern:
   defb %00110000    ; Row 0
   defb %00110000    ; Row 1
   defb %00011100    ; Row 2
-  defb %01111010    ; Row 3
+  defb %01111000    ; Row 3
   defb %00011000    ; Row 4
   defb %00100100    ; Row 5
-  defb %00100010    ; Row 6
-  defb %00100000    ; Row 7
+  defb %01000010    ; Row 6
+  defb %01000000    ; Row 7
 bloke_left_1_pattern:
   defb %00110000    ; Row 0
   defb %00110000    ; Row 1
   defb %00011000    ; Row 2
-  defb %00011100    ; Row 3
-  defb %00111110    ; Row 4
-  defb %00111100    ; Row 5
-  defb %00100010    ; Row 6
+  defb %00111100    ; Row 3
+  defb %00011000    ; Row 4
+  defb %00011000    ; Row 5
+  defb %00100100    ; Row 6
+  defb %00000100    ; Row 7
+bloke_left_2_pattern:
+  defb %00110000    ; Row 0
+  defb %00110000    ; Row 1
+  defb %00111000    ; Row 2
+  defb %00011110    ; Row 3
+  defb %00011000    ; Row 4
+  defb %00100100    ; Row 5
+  defb %01000010    ; Row 6
   defb %00000010    ; Row 7
+bloke_left_3_pattern:
+  defb %00110000    ; Row 0
+  defb %00110000    ; Row 1
+  defb %00011000    ; Row 2
+  defb %00111100    ; Row 3
+  defb %00011000    ; Row 4
+  defb %00011000    ; Row 5
+  defb %00100100    ; Row 6
+  defb %00100000    ; Row 7
+bloke_right_0_pattern:
+  defb %00001100    ; Row 0
+  defb %00001100    ; Row 1
+  defb %00111000    ; Row 2
+  defb %00011110    ; Row 3
+  defb %00011000    ; Row 4
+  defb %00100100    ; Row 5
+  defb %01000010    ; Row 6
+  defb %00000010    ; Row 7
+bloke_right_1_pattern:
+  defb %00001100    ; Row 0
+  defb %00001100    ; Row 1
+  defb %00011000    ; Row 2
+  defb %00111100    ; Row 3
+  defb %00011000    ; Row 4
+  defb %00011000    ; Row 5
+  defb %00100100    ; Row 6
+  defb %00100000    ; Row 7
+bloke_right_2_pattern:
+  defb %00001100    ; Row 0
+  defb %00001100    ; Row 1
+  defb %00011100    ; Row 2
+  defb %01111000    ; Row 3
+  defb %00011000    ; Row 4
+  defb %00100100    ; Row 5
+  defb %01000010    ; Row 6
+  defb %01000000    ; Row 7
+bloke_right_3_pattern:
+  defb %00001100    ; Row 0
+  defb %00001100    ; Row 1
+  defb %00011000    ; Row 2
+  defb %00111100    ; Row 3
+  defb %00011000    ; Row 4
+  defb %00011000    ; Row 5
+  defb %00100100    ; Row 6
+  defb %00000100    ; Row 7
 sprite_patterns_end:
