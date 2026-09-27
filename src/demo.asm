@@ -1,0 +1,209 @@
+demo:
+  di
+  call init_tiles
+
+  ; Also set row[1] col[0] with tile 0: $1800 + $20 = $1820
+  ld hl, $1820
+  ld a, 0
+  call WRTVRM
+
+  ; Also set row[0] col[1] with tile 0: $1801
+  ld hl, $1801
+  ld a, 0
+  call WRTVRM
+
+  ; Set row[0] col[31] with tile 0: $181F
+  ld hl, $181F
+  ld a, 0
+  call WRTVRM
+
+; first col on MIDDLE is pattern id 0
+; first col on BOTTOM is pattern id 0
+; no need to set
+
+  ; Fill the whole row 20
+  ld a, 0                 ; A  = Tile ID to draw (e.g., Tile 0)
+  ld hl, $1A80            ; HL = VRAM address for Row 20, Column 0
+  ld b, 32                ; B  = 32 tiles (full width of the screen)
+  call draw_tile_row
+
+  ei
+.loop:
+  call wait_vsync        ; Spin until vblank is fired
+.vblank_trace_start:
+
+  ; -------------------------------------------------------------
+  ; 1. VDP UPDATES FIRST (Critical for OTIR on MSX1)
+  ; -------------------------------------------------------------
+  ; Update sprites immediately while the VDP is guaranteed to be blanking
+  ld a, INIT_NUM_SPRITES 
+  call loadSpriteAttributes
+
+  ; -------------------------------------------------------------
+  ; 2. GAME LOGIC & TILE SHIFTING 
+  ; -------------------------------------------------------------
+  ld a, (frame_count)
+  cp 5
+  jr nz, .skip_if
+
+  ; shift tile in RAM
+  ld hl, tile0_ram_buffer
+  call shift_pattern_left
+
+  ; update VDP with shifted tile
+  ; (It is safe if this spills out of VBlank because LDIRVM is slow and safe)
+  ; TOP area
+  ld hl, tile0_ram_buffer 
+  ld de, $0000          
+  call ldirvm_8
+  ; MIDDLE area
+  ld hl, tile0_ram_buffer 
+  ld de, $0800          
+  call ldirvm_8
+  ; BOTTOM area
+  ld hl, tile0_ram_buffer
+  ld de, $1000
+  call ldirvm_8  
+
+  ; frame_count = 0
+  ld hl, frame_count
+  ld (hl), 0
+  jr .vblank_trace_end
+
+.skip_if:
+  ld hl, frame_count
+  inc (hl)
+
+.vblank_trace_end:
+;  ld hl, sprite0_x
+;  dec (hl)
+
+  ; -------------------------------------------------------------
+  ; 3. KEYBOARD & MOVEMENT
+  ; -------------------------------------------------------------
+;  call scan_keypad
+;  ld e, a
+
+  ; if right
+;  bit KEY_RIGHT_BIT, e
+;  jr nz, .not_right_key
+
+;  ld hl, sprite0_x
+;  inc (hl)  
+;  inc (hl)
+
+; .not_right_key:
+
+
+  call update_player
+  jp .loop
+
+
+; ==============================================================================
+; Routine:      update_player
+; Description:  Reads keypad. Moves left/right and loops a 4-frame animation 
+;               every 2 frames based on the current direction's base pattern.
+; Destroys:     A, HL, E
+; ==============================================================================
+update_player:
+  call scan_keypad
+  ld e, a
+
+  ; Check Left Arrow (Bit 4 is 0 when pressed)
+  bit KEY_LEFT_BIT, e
+  jr z, .move_left
+
+  ; Check Right Arrow (Bit 7 is 0 when pressed)
+  bit KEY_RIGHT_BIT, e
+  jr z, .move_right
+
+  ; --- Idle State (No horizontal keys pressed) ---
+  xor a
+  ld (player_anim_timer), a    ; Reset timer
+  ld (player_anim_frame), a    ; Reset frame to 0 (standing)
+  ld a, (player_direction)     ; Load base offset (0 or 4)
+  ld (sprite0_pat), a          ; Apply standing pattern
+  ret
+
+.move_left:
+  xor a                        ; Base offset for Left is 0
+  ld (player_direction), a
+  ld hl, sprite0_x
+  dec (hl)                     ; Move left
+  jr .animate
+
+.move_right:
+  ld a, 4                      ; Base offset for Right is 4
+  ld (player_direction), a
+  ld hl, sprite0_x
+  inc (hl)                     ; Move right
+  ; fall through to .animate
+
+.animate:
+  ; Handle Animation Timer (Updates every 2 frames)
+  ld hl, player_anim_timer
+  inc (hl)
+  ld a, (hl)
+  cp 4
+  jr nz, .apply_pattern        ; If timer isn't 2 yet, keep current pattern
+
+  ; Reset timer and advance frame
+  ld (hl), 0                   ; Reset anim_timer to 0
+
+  ld hl, player_anim_frame
+  ld a, (hl)
+  inc a                        ; Next frame
+  and %00000011                ; Mask to wrap 0-3
+  ld (hl), a                   ; Save new frame
+
+.apply_pattern:
+  ; Final Pattern = Direction Base (0 or 4) + Anim Frame (0 to 3)
+  ld a, (player_direction)
+  ld hl, player_anim_frame
+  add a, (hl)
+  ld (sprite0_pat), a          ; Update pattern ID in shadow RAM
+  ret
+  
+  
+init_tiles:
+  ; Initialize intro
+  di
+ 
+  call load_all_tile_patterns
+  call load_all_tile_colors
+
+  ; Set the colors for tile 0 (Pattern Color Table at $2000)
+  ld hl, tile0_color
+  ld de, $2000
+  call ldirvm_8
+
+  ; Set the tile pattern for tile 0 (Pattern Generator Table at $0000)
+  ld hl, tile0_ram_buffer
+  ld de, $0000          
+  call ldirvm_8
+
+  ; Set the tile name for screen position 0 (Pattern Name Table at $1800)
+  ld hl, $1800        ; Target VRAM address: Start of Name Table (Top-left of the screen)
+  ld a, 0             ; The ID of the tile to draw (tile 0)
+  call WRTVRM         ; Call BIOS to write the single byte in A to VRAM address in HL  
+
+;Top Third (Rows 0 to 7):
+;
+;  Name Table: $1800 to $18FF (256 bytes)
+;  Pattern Table: $0000 to $07FF
+;  Color Table: $2000 to $27FF
+;
+;Middle Third (Rows 8 to 15):
+;  Name Table: $1900 to $19FF (256 bytes)
+;  Pattern Table: $0800 to $0FFF
+;  Color Table: $2800 to $2FFF
+;
+;Bottom Third (Rows 16 to 23):
+;  Name Table: $1A00 to $1AFF (256 bytes)
+;  Pattern Table: $1000 to $17FF
+;  Color Table: $3000 to $37FF
+
+; Set the pattern table for middle and bottom
+
+  ret
+

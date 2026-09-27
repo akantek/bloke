@@ -9,12 +9,16 @@ header:
   dw 0, 0, 0
 
 include "main.asm"
+include "assets.asm"
 include "intro.asm"
+include "intro_map.asm"
+include "demo.asm"
 include "ram.asm"
 include "constants.asm"
 include "vblank.asm"
 include "vdp.asm"
 include "keypad.asm"
+include "maps.asm"
 include "tilesheet.asm"
 include "spritesheet.asm"
 
