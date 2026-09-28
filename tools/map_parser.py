@@ -1,12 +1,48 @@
 import sys
 import os
 
-# Define your character-to-tile-ID dictionary here
 TILE_MAP = {
-    '.': 0x00,  # Tile
-    '1': 0x01,  # Tile
-    '2': 0x02,  # Tile
+    # --- Background ---
+    '.': 0x00,  # _blank_pattern (Can be used for your dynamic water)
+    ' ': 0x27,  # _space_pattern
+    
+    # --- Numbers (IDs 0x01 to 0x0A) ---
+    '0': 0x01,
+    '1': 0x02,
+    '2': 0x03,
+    '3': 0x04,
+    '4': 0x05,
+    '5': 0x06,
+    '6': 0x07,
+    '7': 0x08,
+    '8': 0x09,
+    '9': 0x0A,
+    
+    # --- Alphabet (IDs 0x0B to 0x24) ---
+    'A': 0x0B, 'B': 0x0C, 'C': 0x0D, 'D': 0x0E,
+    'E': 0x0F, 'F': 0x10, 'G': 0x11, 'H': 0x12,
+    'I': 0x13, 'J': 0x14, 'K': 0x15, 'L': 0x16,
+    'M': 0x17, 'N': 0x18, 'O': 0x19, 'P': 0x1A,
+    'Q': 0x1B, 'R': 0x1C, 'S': 0x1D, 'T': 0x1E,
+    'U': 0x1F, 'V': 0x20, 'W': 0x21, 'X': 0x22,
+    'Y': 0x23, 'Z': 0x24,
+    
+    # --- Punctuation (IDs 0x25 to 0x26) ---
+    '?': 0x25,  # _interrogation_pattern
+    ';': 0x26,  # _semi_colon_pattern
+    
+    # --- Static ROM Walls (IDs 0x28 to 0x29) ---
+    # Use these characters if you want the un-animated ROM versions
+    '[': 0x28,  # _tile0_pattern
+    ']': 0x29,  # _tile1_pattern
+    
+    # --- Dynamic RAM Buffers (IDs 0x2A to 0x2B) ---
+    # Use these completely unused IDs for your shifting animated walls 
+    # so you don't accidentally overwrite your numbers or letters!
+    '#': 0x2A,  # Dynamic RAM Wall 1 (Backed by tile1_ram_buffer)
+    '=': 0x2B,  # Dynamic RAM Wall 2 (Backed by tile2_ram_buffer)
 }
+
 
 def parse_map(input_file, output_file, label_name):
     # Read the text file, ignoring empty lines

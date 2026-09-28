@@ -93,7 +93,7 @@ init_sprite_attributes:
 ; Description:  Copies all tile graphics to all three thirds of SCREEN 2
 ; Destroys:     A, BC, DE, HL
 ; ==============================================================================
-load_all_tile_patterns:
+load_tile_patterns:
   di
   
   ; --- 1. Top Third (VRAM $0000) ---
@@ -122,7 +122,7 @@ load_all_tile_patterns:
 ; Routine:      load_all_tile_colors
 ; Description:  Copies all tile colors to all three thirds of SCREEN 2
 ; ==============================================================================
-load_all_tile_colors:
+load_tile_colors:
   di
   
   ; --- 1. Top Third Color (VRAM $2000) ---
@@ -144,5 +144,155 @@ load_all_tile_colors:
   call write_vram_large
   
   ei
+  ret
+
+
+init_tiles:
+  di
+  
+  ; Note: If load_all_tile_colors exists in your assets.asm, call it here, 
+  ; otherwise remove it if you are setting colors manually below.
+
+  ; -------------------------------------------------------------
+  ; Setup Tile ID 0x00 (Background/Water)
+  ; -------------------------------------------------------------
+  ld hl, _blank_pattern      ; Source ROM graphic
+  ld de, tile0_ram_buffer    ; Target RAM buffer
+  ld a, 0                    ; Tile ID 0
+  call setup_dynamic_tile
+
+  ld hl, tile0_color
+  ld a, 0
+  call load_tile_color
+
+  ; -------------------------------------------------------------
+  ; Setup Tile ID 0x01 (Wall 1)
+  ; -------------------------------------------------------------
+  ld hl, _tile0_pattern      ; Source ROM graphic
+  ld de, tile1_ram_buffer    ; Target RAM buffer
+  ld a, 1                    ; Tile ID 1
+  call setup_dynamic_tile
+
+  ; ld hl, tile1_color
+  ; ld a, 1
+  ; call load_tile_color
+
+  ; -------------------------------------------------------------
+  ; Setup Tile ID 0x02 (Wall 2)
+  ; -------------------------------------------------------------
+  ld hl, _tile1_pattern      ; Source ROM graphic
+  ld de, tile2_ram_buffer    ; Target RAM buffer
+  ld a, 2                    ; Tile ID 2
+  call setup_dynamic_tile
+
+  ; ld hl, tile2_color
+  ; ld a, 2
+  ; call load_tile_color
+
+  ; Set the tile name for screen position 0 (Top-left)
+  ld hl, $1800        
+  ld a, 0             
+  call WRTVRM         
+  
+  ret
+
+
+; ==============================================================================
+; Routine:      setup_dynamic_tile
+; ==============================================================================
+setup_dynamic_tile:
+  ; 1. Copy ROM Pattern to RAM Buffer
+  push af           
+  push de           
+  ld bc, 8
+  ldir              
+
+  ; 2. Calculate VRAM Offset (Tile ID * 8)
+  pop hl            
+  pop af            
+
+  ld c, a
+  ld b, 0
+  sla c             
+  rl b
+  sla c             
+  rl b
+  sla c             
+  rl b              
+
+  ; 3. Upload to Top Third ($0000 + Offset)
+  push hl           
+  push bc           
+  ld hl, $0000
+  add hl, bc
+  ex de, hl         
+  pop bc
+  pop hl
+  push hl           
+  push bc
+  call ldirvm_8     
+
+  ; 4. Upload to Middle Third ($0800 + Offset)
+  pop bc
+  pop hl
+  push hl
+  push bc
+  ld hl, $0800
+  add hl, bc
+  ex de, hl         
+  call ldirvm_8
+
+  ; 5. Upload to Bottom Third ($1000 + Offset)
+  pop bc
+  pop hl
+  ld hl, $1000
+  add hl, bc
+  ex de, hl         
+  call ldirvm_8
+  ret
+
+; ==============================================================================
+; Routine:      load_tile_color
+; ==============================================================================
+load_tile_color:
+  ; 1. Calculate VRAM Offset (Tile ID * 8)
+  ld c, a
+  ld b, 0
+  sla c
+  rl b
+  sla c
+  rl b
+  sla c
+  rl b
+
+  ; 2. Top Third ($2000 + Offset)
+  push hl       
+  push bc       
+  ld hl, $2000
+  add hl, bc
+  ex de, hl     
+  pop bc        
+  pop hl        
+  push hl       
+  push bc
+  call ldirvm_8 
+
+  ; 3. Middle Third ($2800 + Offset)
+  pop bc
+  pop hl
+  push hl
+  push bc
+  ld hl, $2800
+  add hl, bc
+  ex de, hl     
+  call ldirvm_8
+
+  ; 4. Bottom Third ($3000 + Offset)
+  pop bc
+  pop hl
+  ld hl, $3000
+  add hl, bc
+  ex de, hl     
+  call ldirvm_8
   ret
 

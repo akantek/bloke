@@ -1,3 +1,4 @@
+; Bloke Runner 2026
 
 main:
   ; ROM standard SP initialization (move to top-of-RAM)
@@ -6,6 +7,7 @@ main:
   di
   call boot
   jp intro
+
 
 boot:
   ; COLOR 15,1,1
@@ -23,9 +25,9 @@ boot:
   ; Initialize VDP
   call enable_8x8_sprites
 
-  ; Load assets
+  ; Load all static assets
   call load_sprite_patterns 
-  call init_sprite_attributes
+  call load_tile_patterns
 
   ; Install VBlank hook
   xor a

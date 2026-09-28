@@ -5,7 +5,7 @@
 ; =================================================================
 
 tile_patterns_start:
-tile0_pattern:
+_blank_pattern:
   defb %00000000    ; Row 0
   defb %00000000    ; Row 1
   defb %00000000    ; Row 2
@@ -14,7 +14,358 @@ tile0_pattern:
   defb %00000000    ; Row 5
   defb %00000000    ; Row 6
   defb %00000000    ; Row 7
-tile1_pattern:
+_0_pattern:
+  defb %00011100    ; Row 0
+  defb %00100110    ; Row 1
+  defb %01100011    ; Row 2
+  defb %01100011    ; Row 3
+  defb %01100011    ; Row 4
+  defb %00110010    ; Row 5
+  defb %00011100    ; Row 6
+  defb %00000000    ; Row 7
+_1_pattern:
+  defb %00001100    ; Row 0
+  defb %00011100    ; Row 1
+  defb %00001100    ; Row 2
+  defb %00001100    ; Row 3
+  defb %00001100    ; Row 4
+  defb %00001100    ; Row 5
+  defb %00111111    ; Row 6
+  defb %00000000    ; Row 7
+_2_pattern:
+  defb %00111110    ; Row 0
+  defb %01100011    ; Row 1
+  defb %00000111    ; Row 2
+  defb %00011110    ; Row 3
+  defb %00111100    ; Row 4
+  defb %01110000    ; Row 5
+  defb %01111111    ; Row 6
+  defb %00000000    ; Row 7
+_3_pattern:
+  defb %00111111    ; Row 0
+  defb %00000110    ; Row 1
+  defb %00001100    ; Row 2
+  defb %00011110    ; Row 3
+  defb %00000011    ; Row 4
+  defb %01100011    ; Row 5
+  defb %00111110    ; Row 6
+  defb %00000000    ; Row 7
+_4_pattern:
+  defb %00001110    ; Row 0
+  defb %00011110    ; Row 1
+  defb %00110110    ; Row 2
+  defb %01100110    ; Row 3
+  defb %01111111    ; Row 4
+  defb %00000110    ; Row 5
+  defb %00000110    ; Row 6
+  defb %00000000    ; Row 7
+_5_pattern:
+  defb %01111110    ; Row 0
+  defb %01100000    ; Row 1
+  defb %01111110    ; Row 2
+  defb %00000011    ; Row 3
+  defb %00000011    ; Row 4
+  defb %01100011    ; Row 5
+  defb %00111110    ; Row 6
+  defb %00000000    ; Row 7
+_6_pattern:
+  defb %00011110    ; Row 0
+  defb %00110000    ; Row 1
+  defb %01100000    ; Row 2
+  defb %01111110    ; Row 3
+  defb %01100011    ; Row 4
+  defb %01100011    ; Row 5
+  defb %00111110    ; Row 6
+  defb %00000000    ; Row 7
+_7_pattern:
+  defb %01111111    ; Row 0
+  defb %01100011    ; Row 1
+  defb %00000110    ; Row 2
+  defb %00001100    ; Row 3
+  defb %00011000    ; Row 4
+  defb %00011000    ; Row 5
+  defb %00011000    ; Row 6
+  defb %00000000    ; Row 7
+_8_pattern:
+  defb %00111110    ; Row 0
+  defb %01100001    ; Row 1
+  defb %01110001    ; Row 2
+  defb %00111110    ; Row 3
+  defb %01001111    ; Row 4
+  defb %01000001    ; Row 5
+  defb %00111110    ; Row 6
+  defb %00000000    ; Row 7
+_9_pattern:
+  defb %00111110    ; Row 0
+  defb %01100011    ; Row 1
+  defb %01100011    ; Row 2
+  defb %00111111    ; Row 3
+  defb %00000011    ; Row 4
+  defb %00000110    ; Row 5
+  defb %00111100    ; Row 6
+  defb %00000000    ; Row 7
+_A_pattern:
+  defb %00011100    ; Row 0
+  defb %00110110    ; Row 1
+  defb %01100011    ; Row 2
+  defb %01100011    ; Row 3
+  defb %01111111    ; Row 4
+  defb %01100011    ; Row 5
+  defb %01100011    ; Row 6
+  defb %00000000    ; Row 7
+_B_pattern:
+  defb %01111110    ; Row 0
+  defb %01100011    ; Row 1
+  defb %01100011    ; Row 2
+  defb %01111110    ; Row 3
+  defb %01100011    ; Row 4
+  defb %01100011    ; Row 5
+  defb %01111110    ; Row 6
+  defb %00000000    ; Row 7
+_C_pattern:
+  defb %00011110    ; Row 0
+  defb %00110011    ; Row 1
+  defb %01100000    ; Row 2
+  defb %01100000    ; Row 3
+  defb %01100000    ; Row 4
+  defb %00110011    ; Row 5
+  defb %00011110    ; Row 6
+  defb %00000000    ; Row 7
+_D_pattern:
+  defb %01111100    ; Row 0
+  defb %01100110    ; Row 1
+  defb %01100011    ; Row 2
+  defb %01100011    ; Row 3
+  defb %01100011    ; Row 4
+  defb %01100110    ; Row 5
+  defb %01111100    ; Row 6
+  defb %00000000    ; Row 7
+_E_pattern:
+  defb %00111111    ; Row 0
+  defb %00110000    ; Row 1
+  defb %00110000    ; Row 2
+  defb %00111110    ; Row 3
+  defb %00110000    ; Row 4
+  defb %00110000    ; Row 5
+  defb %00111111    ; Row 6
+  defb %00000000    ; Row 7
+_F_pattern:
+  defb %01111111    ; Row 0
+  defb %01100000    ; Row 1
+  defb %01100000    ; Row 2
+  defb %01111110    ; Row 3
+  defb %01100000    ; Row 4
+  defb %01100000    ; Row 5
+  defb %01100000    ; Row 6
+  defb %00000000    ; Row 7
+_G_pattern:
+  defb %00011111    ; Row 0
+  defb %00110000    ; Row 1
+  defb %01100000    ; Row 2
+  defb %01100111    ; Row 3
+  defb %01100011    ; Row 4
+  defb %00110011    ; Row 5
+  defb %00011111    ; Row 6
+  defb %00000000    ; Row 7
+_H_pattern:
+  defb %01100011    ; Row 0
+  defb %01100011    ; Row 1
+  defb %01100011    ; Row 2
+  defb %01111111    ; Row 3
+  defb %01100011    ; Row 4
+  defb %01100011    ; Row 5
+  defb %01100011    ; Row 6
+  defb %00000000    ; Row 7
+_I_pattern:
+  defb %00111111    ; Row 0
+  defb %00001100    ; Row 1
+  defb %00001100    ; Row 2
+  defb %00001100    ; Row 3
+  defb %00001100    ; Row 4
+  defb %00001100    ; Row 5
+  defb %00111111    ; Row 6
+  defb %00000000    ; Row 7
+_J_pattern:
+  defb %00000011    ; Row 0
+  defb %00000011    ; Row 1
+  defb %00000011    ; Row 2
+  defb %00000011    ; Row 3
+  defb %00000011    ; Row 4
+  defb %01100011    ; Row 5
+  defb %00111110    ; Row 6
+  defb %00000000    ; Row 7
+_K_pattern:
+  defb %01100011    ; Row 0
+  defb %01100110    ; Row 1
+  defb %01101100    ; Row 2
+  defb %01111000    ; Row 3
+  defb %01111100    ; Row 4
+  defb %01101110    ; Row 5
+  defb %01100111    ; Row 6
+  defb %00000000    ; Row 7
+_L_pattern:
+  defb %00110000    ; Row 0
+  defb %00110000    ; Row 1
+  defb %00110000    ; Row 2
+  defb %00110000    ; Row 3
+  defb %00110000    ; Row 4
+  defb %00110000    ; Row 5
+  defb %00111111    ; Row 6
+  defb %00000000    ; Row 7
+_M_pattern:
+  defb %01100011    ; Row 0
+  defb %01110111    ; Row 1
+  defb %01111111    ; Row 2
+  defb %01111111    ; Row 3
+  defb %01101011    ; Row 4
+  defb %01100011    ; Row 5
+  defb %01100011    ; Row 6
+  defb %00000000    ; Row 7
+_N_pattern:
+  defb %01100011    ; Row 0
+  defb %01110011    ; Row 1
+  defb %01111011    ; Row 2
+  defb %01111111    ; Row 3
+  defb %01101111    ; Row 4
+  defb %01100111    ; Row 5
+  defb %01100011    ; Row 6
+  defb %00000000    ; Row 7
+_O_pattern:
+  defb %00111110    ; Row 0
+  defb %01100011    ; Row 1
+  defb %01100011    ; Row 2
+  defb %01100011    ; Row 3
+  defb %01100011    ; Row 4
+  defb %01100011    ; Row 5
+  defb %00111110    ; Row 6
+  defb %00000000    ; Row 7
+_P_pattern:
+  defb %01111110    ; Row 0
+  defb %01100011    ; Row 1
+  defb %01100011    ; Row 2
+  defb %01100011    ; Row 3
+  defb %01111110    ; Row 4
+  defb %01100000    ; Row 5
+  defb %01100000    ; Row 6
+  defb %00000000    ; Row 7
+_Q_pattern:
+  defb %01111110    ; Row 0
+  defb %01100011    ; Row 1
+  defb %01100011    ; Row 2
+  defb %01100011    ; Row 3
+  defb %01101111    ; Row 4
+  defb %01100110    ; Row 5
+  defb %00111101    ; Row 6
+  defb %00000000    ; Row 7
+_R_pattern:
+  defb %01111110    ; Row 0
+  defb %01100011    ; Row 1
+  defb %01100011    ; Row 2
+  defb %01100111    ; Row 3
+  defb %01111100    ; Row 4
+  defb %01101110    ; Row 5
+  defb %01100111    ; Row 6
+  defb %00000000    ; Row 7
+_S_pattern:
+  defb %00111110    ; Row 0
+  defb %01100011    ; Row 1
+  defb %01100000    ; Row 2
+  defb %00111110    ; Row 3
+  defb %00000011    ; Row 4
+  defb %01100011    ; Row 5
+  defb %00111110    ; Row 6
+  defb %00000000    ; Row 7
+_T_pattern:
+  defb %00111111    ; Row 0
+  defb %00001100    ; Row 1
+  defb %00001100    ; Row 2
+  defb %00001100    ; Row 3
+  defb %00001100    ; Row 4
+  defb %00001100    ; Row 5
+  defb %00001100    ; Row 6
+  defb %00000000    ; Row 7
+_U_pattern:
+  defb %01100011    ; Row 0
+  defb %01100011    ; Row 1
+  defb %01100011    ; Row 2
+  defb %01100011    ; Row 3
+  defb %01100011    ; Row 4
+  defb %01100011    ; Row 5
+  defb %00111110    ; Row 6
+  defb %00000000    ; Row 7
+_V_pattern:
+  defb %01100011    ; Row 0
+  defb %01100011    ; Row 1
+  defb %01100011    ; Row 2
+  defb %01110111    ; Row 3
+  defb %00111110    ; Row 4
+  defb %00011100    ; Row 5
+  defb %00001000    ; Row 6
+  defb %00000000    ; Row 7
+_W_pattern:
+  defb %01100011    ; Row 0
+  defb %01100011    ; Row 1
+  defb %01101011    ; Row 2
+  defb %01111111    ; Row 3
+  defb %01111111    ; Row 4
+  defb %00110110    ; Row 5
+  defb %00100010    ; Row 6
+  defb %00000000    ; Row 7
+_X_pattern:
+  defb %01100011    ; Row 0
+  defb %01110111    ; Row 1
+  defb %00111110    ; Row 2
+  defb %00011100    ; Row 3
+  defb %00111110    ; Row 4
+  defb %01110111    ; Row 5
+  defb %01100011    ; Row 6
+  defb %00000000    ; Row 7
+_Y_pattern:
+  defb %00110011    ; Row 0
+  defb %00110011    ; Row 1
+  defb %00010010    ; Row 2
+  defb %00011110    ; Row 3
+  defb %00001100    ; Row 4
+  defb %00001100    ; Row 5
+  defb %00001100    ; Row 6
+  defb %00000000    ; Row 7
+_Z_pattern:
+  defb %01111111    ; Row 0
+  defb %00000111    ; Row 1
+  defb %00001110    ; Row 2
+  defb %00011100    ; Row 3
+  defb %00111000    ; Row 4
+  defb %01110000    ; Row 5
+  defb %01111111    ; Row 6
+  defb %00000000    ; Row 7
+_interrogation_pattern:
+  defb %00011000    ; Row 0
+  defb %00011000    ; Row 1
+  defb %00011000    ; Row 2
+  defb %00011000    ; Row 3
+  defb %00011000    ; Row 4
+  defb %00000000    ; Row 5
+  defb %00011000    ; Row 6
+  defb %00011000    ; Row 7
+_semi_colon_pattern:
+  defb %00000000    ; Row 0
+  defb %00011000    ; Row 1
+  defb %00011000    ; Row 2
+  defb %00000000    ; Row 3
+  defb %00011000    ; Row 4
+  defb %00011000    ; Row 5
+  defb %00110000    ; Row 6
+  defb %00000000    ; Row 7
+_space_pattern:
+  defb %00000000    ; Row 0
+  defb %00000000    ; Row 1
+  defb %00000000    ; Row 2
+  defb %00000000    ; Row 3
+  defb %00000000    ; Row 4
+  defb %00000000    ; Row 5
+  defb %00000000    ; Row 6
+  defb %00000000    ; Row 7
+_tile0_pattern:
   defb %00111111    ; Row 0
   defb %10011111    ; Row 1
   defb %11001111    ; Row 2
@@ -23,7 +374,7 @@ tile1_pattern:
   defb %11110011    ; Row 5
   defb %11111001    ; Row 6
   defb %11111100    ; Row 7
-tile2_pattern:
+_tile1_pattern:
   defb %11011111    ; Row 0
   defb %11011111    ; Row 1
   defb %11011111    ; Row 2

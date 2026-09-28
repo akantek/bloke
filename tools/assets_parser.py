@@ -30,7 +30,7 @@ def convert_asset_data(input_path, output_path, asset_name):
                 # Handle the tile label
                 if line.startswith("--"):
                     tile_name = line.replace("--", "").strip()
-                    f_out.write(f"{tile_name}_pattern:\n")
+                    f_out.write(f"_{tile_name}_pattern:\n")
                     row = 0
 
                 # Handle the binary rows

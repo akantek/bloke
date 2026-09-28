@@ -8,12 +8,15 @@ frame_count:   equ $C00B  ; 1 Byte
 ; ========================================================
 ; RAM area to store tiles and sprites
 ; ========================================================
-tile0_ram_buffer: equ $C00C  ; 8 bytes
+tile0_ram_buffer: equ $C00C  ; 8 Byte
+tile1_ram_buffer: equ $C014  ; 8 Byte
+tile2_ram_buffer: equ $C01C  ; 8 Byte
 
 ; --- Player Animation State ---
-player_anim_timer: equ $C014  ; 1 Byte (Counts 0 to 1)
-player_anim_frame: equ $C015  ; 1 Byte (Counts 0 to 3)
-player_direction:  equ $C016  ; 1 Byte (0 = Left base, 4 = Right base)
+player_anim_timer: equ $C024  ; 1 Byte (Counts 0 to 1)
+player_anim_frame: equ $C025  ; 1 Byte (Counts 0 to 3)
+player_direction:  equ $C026  ; 1 Byte (0 = Left base, 4 = Right base)
+push_space_anim_frame: equ $C027 ; 1 Byte
 
 ; ========================================================
 ; Shadow Sprite Attribute Table (SAT) in RAM

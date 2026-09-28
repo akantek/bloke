@@ -165,12 +165,12 @@ update_player:
   ret
   
   
-init_tiles:
+init_tiles2:
   ; Initialize intro
   di
  
-  call load_all_tile_patterns
-  call load_all_tile_colors
+  call load_tile_patterns
+  call load_tile_colors
 
   ; Set the colors for tile 0 (Pattern Color Table at $2000)
   ld hl, tile0_color

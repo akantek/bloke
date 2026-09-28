@@ -7,10 +7,10 @@ sprite0_attributes_data:
   db 150, 10,   0,   4
 
 tile_colors_start:
-tile0_color:
+_tile0_color:
   db $11, $11, $11, $11, $11, $11, $11, $11
 
-tile1_color:
+_tile1_color:
   db $F4, $F4, $F4, $F4, $F4, $F4, $F4, $F4
 
 tile2_color:
