@@ -26,6 +26,9 @@ boot:
   ld a, 2
   call CHGMOD
 
+  ; SCREEN OFF
+  call DISSCR
+
   ; Initialize VDP
   call enable_16x16_sprites
 

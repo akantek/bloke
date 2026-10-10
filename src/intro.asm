@@ -2,58 +2,53 @@ intro:
   di
 
   ; Init vars
+  ; frame_count = 0
   ld hl, frame_count
   ld (hl), 0
-
+  ; intro_state = 0
   ld hl, intro_state
   ld (hl), 0
-
+  ; push_space_anim_frame = 0
+  ld hl, push_space_anim_frame
+  ld (hl), 0
+  
   ; Set up
   call set_tile0_colors
   call set_numbers_colors
   call set_alphabet_colors
   call set_static_tiles_color
-
-  ; push_space_anim_frame = 0
-  ld hl, push_space_anim_frame
-  ld (hl), 0
-
   call init_dynamic_tiles
-  ; 2. Initialize your RAM buffer so the shifting loop has data to shift
-  ; update VDP with shifted tile
+  call set_dynamic_tiles_color
+  
+  ; Update PGT for tile $2A (dynamic tile)
   ; TOP area
   ld hl, tile0_ram_buffer 
-  ld de, $0150          ; <-- CHANGED to Tile $2A
+  ld de, $0150
   call ldirvm_8
-  
   ; MIDDLE area
   ld hl, tile0_ram_buffer 
-  ld de, $0950          ; <-- CHANGED to Tile $2A
+  ld de, $0950
   call ldirvm_8
-  
   ; BOTTOM area
   ld hl, tile0_ram_buffer
-  ld de, $1150          ; <-- CHANGED to Tile $2A
+  ld de, $1150
   call ldirvm_8
-
-  call set_dynamic_tiles_color
 
   ; Load the full screen map
   ld hl, intro_map
   call load_stage_map
 
-  ; Init vars
-  ld hl, frame_count
-  ld (hl), 0
+  ; SCREEN ON
+  call ENASCR
 
   ei
 
 .intro_loop:
   call wait_vsync
 .intro_vblank_trace_start:
-
   ; ---------------------------------------------------------
   ; 1. VDP UPDATES (Safe Zone - inside VBlank)
+  ;    ~4.5 ms (70 scanlines)
   ; ---------------------------------------------------------
   
   ; Update VDP with shifted tile
@@ -105,10 +100,9 @@ intro:
   call LDIRVM
 
 .intro_vblank_trace_end:
-
-
   ; ---------------------------------------------------------
   ; 2. GAME LOGIC (Outside VBlank, CPU has plenty of time)
+  ;    ~12.2 ms (192 scanlines)
   ; ---------------------------------------------------------
   
   ; --- Tile shift logic ---

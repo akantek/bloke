@@ -117,61 +117,43 @@ _bloke_left_2_pattern:
   defb %00000000
 _bloke_right_0_pattern:
   ; Top-Left
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
+  defb %00000100
+  defb %00000110
+  defb %00000110
+  defb %00000100
+  defb %00011110
+  defb %00101111
+  defb %00101100
+  defb %00100100
   ; Bottom-Left
-  defb %00000000
-  defb %00000000
-  defb %00000001
-  defb %00000000
+  defb %00100010
+  defb %01000010
+  defb %10000010
+  defb %00000010
   defb %00000000
   defb %00000000
   defb %00000000
   defb %00000000
   ; Top-Right
-  defb %00001000
-  defb %00001100
-  defb %00001100
-  defb %00001000
-  defb %00111100
-  defb %01011110
-  defb %01011001
-  defb %01001000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %10000000
+  defb %00000000
   ; Bottom-Right
-  defb %01000100
-  defb %10000100
-  defb %00000100
-  defb %00000100
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
   defb %00000000
   defb %00000000
   defb %00000000
   defb %00000000
 _bloke_right_1_pattern:
   ; Top-Left
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  ; Bottom-Left
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  ; Top-Right
   defb %00001000
   defb %00001100
   defb %00001100
@@ -180,35 +162,35 @@ _bloke_right_1_pattern:
   defb %00011000
   defb %00011100
   defb %00011000
+  ; Bottom-Left
+  defb %00001000
+  defb %00001000
+  defb %00010000
+  defb %00010000
+  defb %00010000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  ; Top-Right
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
   ; Bottom-Right
-  defb %00001000
-  defb %00001000
-  defb %00010000
-  defb %00010000
-  defb %00010000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
   defb %00000000
   defb %00000000
   defb %00000000
 _bloke_right_2_pattern:
   ; Top-Left
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  ; Bottom-Left
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  defb %00000000
-  ; Top-Right
   defb %00001000
   defb %00001100
   defb %00001100
@@ -217,12 +199,67 @@ _bloke_right_2_pattern:
   defb %01011111
   defb %10011000
   defb %00001000
-  ; Bottom-Right
+  ; Bottom-Left
   defb %00010100
   defb %11100010
   defb %00000010
   defb %00000100
   defb %00001000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  ; Top-Right
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  ; Bottom-Right
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+_bloke_falling_pattern:
+  ; Top-Left
+  defb %10000010
+  defb %10010010
+  defb %10010010
+  defb %10010010
+  defb %11010110
+  defb %01111100
+  defb %00111000
+  defb %00111000
+  ; Bottom-Left
+  defb %00111000
+  defb %00101000
+  defb %00101000
+  defb %00101000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  ; Top-Right
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  ; Bottom-Right
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
+  defb %00000000
   defb %00000000
   defb %00000000
   defb %00000000
