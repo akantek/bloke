@@ -12,11 +12,19 @@ tile0_ram_buffer: equ $C00C  ; 8 Byte
 tile1_ram_buffer: equ $C014  ; 8 Byte
 tile2_ram_buffer: equ $C01C  ; 8 Byte
 
+; ========================================================
+; Intro variables
+; ========================================================
+intro_state:     equ $C024  ; 0 = Waiting for space, 1 = Fast blink transition
+intro_countdown: equ $C025  ; Frame countdown (120 frames = 2 seconds at 60FPS)
+
 ; --- Player Animation State ---
-player_anim_timer: equ $C024  ; 1 Byte (Counts 0 to 1)
-player_anim_frame: equ $C025  ; 1 Byte (Counts 0 to 3)
-player_direction:  equ $C026  ; 1 Byte (0 = Left base, 4 = Right base)
-push_space_anim_frame: equ $C027 ; 1 Byte
+player_anim_timer: equ $C026  ; 1 Byte (Counts 0 to 1)
+player_anim_frame: equ $C027  ; 1 Byte (Counts 0 to 3)
+player_direction:  equ $C028  ; 1 Byte (0 = Left base, 4 = Right base)
+push_space_anim_frame: equ $C029 ; 1 Byte
+
+
 
 ; ========================================================
 ; Shadow Sprite Attribute Table (SAT) in RAM

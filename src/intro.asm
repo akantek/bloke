@@ -1,7 +1,14 @@
 intro:
   di
 
-  ; 1. Fix the crash: Call the routines, not the data!
+  ; Init vars
+  ld hl, frame_count
+  ld (hl), 0
+
+  ld hl, intro_state
+  ld (hl), 0
+
+  ; Set up
   call set_tile0_colors
   call set_numbers_colors
   call set_alphabet_colors
@@ -40,56 +47,49 @@ intro:
   ld (hl), 0
 
   ei
+
 .intro_loop:
   call wait_vsync
 .intro_vblank_trace_start:
 
-  ; update VDP with shifted tile
-  ; (It is safe if this spills out of VBlank because LDIRVM is slow and safe)
-  ; TOP area
+  ; ---------------------------------------------------------
+  ; 1. VDP UPDATES (Safe Zone - inside VBlank)
+  ; ---------------------------------------------------------
+  
+  ; Update VDP with shifted tile
   ld hl, tile0_ram_buffer 
   ld de, $0150          
   call ldirvm_8
-  ; MIDDLE area
+  
   ld hl, tile0_ram_buffer 
   ld de, $0950          
   call ldirvm_8
-  ; BOTTOM area
+  
   ld hl, tile0_ram_buffer
   ld de, $1150
   call ldirvm_8 
 
-.intro_vblank_trace_end:
-  ; Tile shift logic
-  ld a, (frame_count)
-  cp 5
-  jr nz, .intro_tile_skip_if
-
-  ld hl, tile0_ram_buffer
-  call shift_pattern_left
-
-  ; frame_count = 0
-  ld hl, frame_count
-  ld (hl), 0
-  jp .end_intro_loop
-
-.intro_tile_skip_if:
-  ld hl, frame_count
-  inc (hl)
- 
-.end_intro_loop:
-
-
-
-
-
-  ; --- Blinking Text Logic ---
+  ; --- Blinking Text Logic & VRAM Write ---
   ld hl, push_space_anim_frame
   inc (hl)
   ld a, (hl)
+  ld b, a              ; Backup the animation frame into B
   
-  ; Check Bit 5 (00100000). It flips between 0 and 1 every 32 frames.
-  and %00100000       
+  ; Check if we are in the transition state
+  ld a, (intro_state)
+  or a
+  jr nz, .fast_blink
+  
+.slow_blink:
+  ld a, b              ; Restore animation frame
+  and %00100000        ; Normal: flip every 32 frames
+  jr .check_blink
+  
+.fast_blink:
+  ld a, b              ; Restore animation frame
+  and %00010000        ; Fast: flip every 16 frames
+  
+.check_blink:
   jr z, .draw_text
   
 .draw_spaces:
@@ -100,13 +100,71 @@ intro:
   ld hl, push_space_text
 
 .update_text_vram:
-  ; We still call LDIRVM every frame, but now it creates an animation
   ld de, $1A69                               
   ld bc, 14 
   call LDIRVM
 
+.intro_vblank_trace_end:
 
+
+  ; ---------------------------------------------------------
+  ; 2. GAME LOGIC (Outside VBlank, CPU has plenty of time)
+  ; ---------------------------------------------------------
+  
+  ; --- Tile shift logic ---
+  ld a, (frame_count)
+  cp 5
+  jr nz, .intro_tile_skip_if
+
+  ld hl, tile0_ram_buffer
+  call shift_pattern_left
+
+  ; frame_count = 0
+  ld hl, frame_count
+  ld (hl), 0
+  jr .check_input
+
+.intro_tile_skip_if:
+  ld hl, frame_count
+  inc (hl)
+
+
+  ; ---------------------------------------------------------
+  ; 3. INPUT & TRANSITION LOGIC
+  ; ---------------------------------------------------------
+  
+.check_input:
+  ld a, (intro_state)
+  or a
+  jr nz, .handle_countdown   ; If state is 1, jump over the keyboard check
+
+.check_space:
+  call scan_keypad
+  bit KEY_SPACE_BIT, a
+  jp nz, .intro_loop         ; If space NOT pressed (bit is 1), go to next frame
+
+  ; =========================================================
+  ; Space WAS pressed! Initialize the transition.
+  ; =========================================================
+  
+  ; call play_start_sound      ; Play the chime (triggers once)
+
+  ; Switch state to 1 to lock out keyboard and enable fast blink
+  ld a, 1
+  ld (intro_state), a
+  
+  ; Start 2-second timer
+  ld a, 120                  ; 120 frames = exactly 2 seconds at 60Hz
+  ld (intro_countdown), a
   jp .intro_loop
+
+.handle_countdown:
+  ld hl, intro_countdown
+  dec (hl)                   ; Tick down the timer (modifies memory directly)
+  ; jp z, stage1               ; 2 seconds are up! Jump to stage1
+  
+  jp .intro_loop             ; Otherwise, keep waiting
+
 
 tile0_color:
   db $11, $11, $11, $11, $11, $11, $11, $11

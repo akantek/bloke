@@ -1,0 +1,3 @@
+1 REM High pitch, medium fade.
+10 SOUND 7,190: SOUND 0,60: SOUND 1,0: SOUND 8,16: SOUND 11,0: SOUND 12,20: SOUND 13,0
+

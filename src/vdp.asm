@@ -65,6 +65,29 @@ enable_8x8_sprites:
   ret
 
 
+; ==============================================================================
+; enable_16x16_sprites
+; One-time VDP initialization to set Sprite Size to 16x16 pixels.
+;
+; NOTES:
+;   - Modifies VDP Register 1.
+;   - Updates the RG1SAV BIOS mirror.
+;   - Should be called during startup (boot) sequence.
+;   - Assumes interrupts are disabled (DI) or no VDP activity is occurring.
+; ==============================================================================
+enable_16x16_sprites:
+  ld a, (RG1SAV)             ; Get current Register 1 value from BIOS mirror
+  or $02                     ; Set Bit 1 to Enable 16x16 sprites (0=8x8, 1=16x16)
+  ld (RG1SAV), a             ; Update mirror so BIOS remembers the change
+
+  out (VDP_CONTROL_PORT), a  ; Step 1: Send the DATA (latches it in VDP)
+  ld a, 1 + 128              ; Prep Command: Register Index (1) + Write Flag ($80)
+                             ;   Bit 7 (write flag) is 1,
+                             ;     and bit 1 (R#1) is also 1 = %81
+  out (VDP_CONTROL_PORT), a  ; Step 2: Send COMMAND to move latched data into Reg 1
+  ret
+
+
 ; ===================================================================
 ; Rotate 8 bytes left (sprite or tile patterns)
 ;

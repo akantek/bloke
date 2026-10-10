@@ -23,7 +23,7 @@ boot:
   call CHGMOD
 
   ; Initialize VDP
-  call enable_8x8_sprites
+  call enable_16x16_sprites
 
   ; Load all static assets
   call load_sprite_patterns 
