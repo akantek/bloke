@@ -18,6 +18,10 @@ boot:
   ld (BDRCLR), a  ; Store in Border system variable ($F3EB)
   call CHGCLR     ; BIOS Call ($0062): Update VDP registers with new colors
 
+  ; CLICK OFF
+  xor a
+  ld (CLIKSW), a  ; Set Click Switch ($F3DB) to 0
+
   ; SCREEN 2
   ld a, 2
   call CHGMOD
