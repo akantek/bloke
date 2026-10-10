@@ -147,7 +147,7 @@ intro:
   ; Space WAS pressed! Initialize the transition.
   ; =========================================================
   
-  ; call play_start_sound      ; Play the chime (triggers once)
+  call play_start_sound      ; Play the chime (triggers once)
 
   ; Switch state to 1 to lock out keyboard and enable fast blink
   ld a, 1
