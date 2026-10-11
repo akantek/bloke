@@ -13,12 +13,12 @@ _bloke_left_0_pattern:
   defb %00111100
   defb %01111010
   defb %10011010
-  defb %00010010
+  defb %00010000
   ; Bottom-Left
-  defb %00100010
-  defb %00100001
-  defb %00100000
-  defb %00100000
+  defb %00101000
+  defb %01001000
+  defb %01000100
+  defb %01000010
   defb %00000000
   defb %00000000
   defb %00000000
@@ -35,7 +35,7 @@ _bloke_left_0_pattern:
   ; Bottom-Right
   defb %00000000
   defb %00000000
-  defb %10000000
+  defb %00000000
   defb %00000000
   defb %00000000
   defb %00000000
@@ -117,19 +117,19 @@ _bloke_left_2_pattern:
   defb %00000000
 _bloke_right_0_pattern:
   ; Top-Left
-  defb %00000100
-  defb %00000110
-  defb %00000110
-  defb %00000100
-  defb %00011110
-  defb %00101111
-  defb %00101100
-  defb %00100100
+  defb %00001000
+  defb %00001100
+  defb %00001100
+  defb %00001000
+  defb %00111100
+  defb %01011110
+  defb %01011001
+  defb %00001000
   ; Bottom-Left
+  defb %00010100
+  defb %00010010
   defb %00100010
   defb %01000010
-  defb %10000010
-  defb %00000010
   defb %00000000
   defb %00000000
   defb %00000000
@@ -141,7 +141,7 @@ _bloke_right_0_pattern:
   defb %00000000
   defb %00000000
   defb %00000000
-  defb %10000000
+  defb %00000000
   defb %00000000
   ; Bottom-Right
   defb %00000000

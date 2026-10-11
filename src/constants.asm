@@ -2,10 +2,6 @@ INIT_NUM_SPRITES: equ 1
 
 NUM_SPRITES:  equ 1
 
-sprite0_attributes_data:
-  ;  Y,  X, Pat, Color
-  db 150, 10,   0,   4
-
 tile_colors_start:
 _tile0_color:
   db $11, $11, $11, $11, $11, $11, $11, $11

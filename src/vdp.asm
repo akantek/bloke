@@ -156,3 +156,40 @@ write_vram_large:
   
   ret
 
+
+; ==============================================================================
+; Routine:      clear_screen2
+; Description:  Clears the screen by filling the Pattern Name Table (PNT) 
+;               at $1800 with Tile ID 0 (your _blank_pattern).
+; Destroys:     A, B, C
+; ==============================================================================
+clear_screen2:
+  di                            ; Disable interrupts during VDP setup
+  
+  ; 1. Set VRAM write address to $1800 (Start of SCREEN 2 PNT)
+  ld a, $00                     ; Low byte of $1800
+  out (VDP_CONTROL_PORT), a
+  
+  ld a, $18                     ; High byte of $1800
+  and $3F                       ; Safety mask
+  or $40                        ; Set bit 6 for VRAM Write Mode
+  out (VDP_CONTROL_PORT), a
+
+  ; 2. Fast loop to write 768 bytes (3 pages of 256 bytes)
+  ld a, 0                       ; A = Tile ID 0 (_blank_pattern)
+  ld b, 3                       ; B = Outer loop counter (3 pages)
+  
+.page_loop:
+  ld c, 0                       ; C = Inner loop counter (256 tiles per page. 0 = 256)
+  
+.tile_loop:
+  out (VDP_DATA_PORT), a        ; Blast Tile ID to VRAM
+  dec c                         ; Decrement inner counter
+  jr nz, .tile_loop             ; Loop until 256 tiles are drawn
+  
+  djnz .page_loop               ; Decrement outer counter, loop 3 times total
+  
+  ei                            ; Re-enable interrupts
+  ret
+
+
