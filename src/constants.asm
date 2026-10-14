@@ -2,6 +2,9 @@ INIT_NUM_SPRITES: equ 1
 
 NUM_SPRITES:  equ 1
 
+PLAYER_DIRECTION_RIGHT: equ 0
+PLAYER_DIRECTION_LEFT:  equ 1
+
 tile_colors_start:
 _tile0_color:
   db $11, $11, $11, $11, $11, $11, $11, $11
