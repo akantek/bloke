@@ -23,8 +23,7 @@ player_anim_timer: equ $C026  ; 1 Byte (Counts 0 to 1)
 player_anim_frame: equ $C027  ; 1 Byte (Counts 0 to 3)
 player_direction:  equ $C028  ; 1 Byte (0 = Left base, 4 = Right base)
 push_space_anim_frame: equ $C029 ; 1 Byte
-
-
+player_is_walking: equ $C02A  ; 1 Byte
 
 ; ========================================================
 ; Shadow Sprite Attribute Table (SAT) in RAM
@@ -32,6 +31,15 @@ push_space_anim_frame: equ $C029 ; 1 Byte
 ; Start Address: $C120
 ; End Address:   $C19F
 ; ========================================================
+
+; TODO: Use more memory efficient approach
+;  ld ix, sprite1_y      ; Point IX to Sprite 1's base address
+;  ld (ix+0), 100        ; Set Y
+;  ld (ix+1), 50         ; Set X
+;  ld (ix+2), 24         ; Set Pattern
+;  ld (ix+3), 15         ; Set Color
+
+
 shadow_sat:      equ $C120
 
 ; Sprite 0
