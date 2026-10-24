@@ -111,11 +111,11 @@ update_player:
 
   ; Check Left Arrow (Bit 4 is 0 when pressed)
   bit KEY_LEFT_BIT, e
-  jr z, .move_left
+  jr z, .move_player_demo_left
 
   ; Check Right Arrow (Bit 7 is 0 when pressed)
   bit KEY_RIGHT_BIT, e
-  jr z, .move_right
+  jr z, .move_player_demo_right
 
   ; --- Idle State (No horizontal keys pressed) ---
   xor a
@@ -125,14 +125,14 @@ update_player:
   ld (sprite0_pat), a          ; Apply standing pattern
   ret
 
-.move_left:
+.move_player_demo_left:
   xor a                        ; Base offset for Left is 0
   ld (player_direction), a
   ld hl, sprite0_x
   dec (hl)                     ; Move left
   jr .animate
 
-.move_right:
+.move_player_demo_right:
   ld a, 4                      ; Base offset for Right is 4
   ld (player_direction), a
   ld hl, sprite0_x

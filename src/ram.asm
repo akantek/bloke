@@ -25,6 +25,13 @@ player_direction:  equ $C028  ; 1 Byte (0 = Left base, 4 = Right base)
 push_space_anim_frame: equ $C029 ; 1 Byte
 player_is_walking: equ $C02A  ; 1 Byte
 
+; --- NPC 1 Animation State ---
+npc1_anim_timer: equ $C02B  
+npc1_anim_frame: equ $C02C  
+npc1_direction:  equ $C02D  
+npc1_is_walking: equ $C02E
+npc1_move_timer: equ $C02F
+
 ; ========================================================
 ; Shadow Sprite Attribute Table (SAT) in RAM
 ; 1 Sprite = 4 Bytes, 32 Sprites Max (128 Bytes Total)

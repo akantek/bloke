@@ -1,7 +1,9 @@
 ;  Player starting position.
-stage1_sprite0_attributes_data:
+stage1_sprites_attributes_data:
   ;  Y,   X,   Pat, Color
-  db 138, 10,  4,   15       ; Pat = 0 (_bloke_right_0), Color = 15 (White)
+  db 138, 10,  4,   15       ; Sprite 0 (Player): Right Idle, Color 15 (White)
+  db 138, 19, 16,   10       ; Sprite 1 (NPC):    Left  Idle, Color 10 (Yellow)
+
 
 ; Stage 1 routine
 stage1:
@@ -28,6 +30,12 @@ stage1:
   ld (player_anim_frame), a  ; 0 = Frame 0
   ld (player_anim_timer), a  ; 0 = Reset timer
   ld (sprite0_pat), a        ; Set Pattern ID to 0
+  ; Init NPC sprite (sprite1_*)
+  ld a, PLAYER_DIRECTION_LEFT
+  ld (npc1_direction), a     ; Start facing left
+  xor a
+  ld (npc1_anim_frame), a
+  ld (npc1_anim_timer), a
 
   ; SCREEN ON
   call ENASCR
@@ -216,8 +224,134 @@ update_player_animation:
   ret
 
 
-; TBD
+; ==============================================================================
+; Routine:      update_npcs
+; Description:  AI chases player at 1/3rd speed. Updates X coordinate every 
+;               3 frames, but keeps animation running smoothly.
+; Destroys:     AF, C, HL
+; ==============================================================================
 update_npcs:
+  ; 1. AI Movement Logic (Compare X coordinates)
+  ld a, (sprite0_x)          ; A = Player's X coordinate
+  ld hl, sprite1_x           ; HL points to NPC's X coordinate
+  cp (hl)                    
+  jr z, .npc1_stop_moving    ; If X is the same, stop moving entirely
+
+  ; 2. Determine Direction
+  jr c, .npc1_set_left       ; If Player X < NPC X, face left
+  
+.npc1_set_right:
+  ld a, PLAYER_DIRECTION_RIGHT
+  ld (npc1_direction), a
+  jr .npc1_check_timer
+
+.npc1_set_left:
+  ld a, PLAYER_DIRECTION_LEFT
+  ld (npc1_direction), a
+
+.npc1_check_timer:
+  ; Flag that the NPC intends to walk (keeps animation playing)
+  ld a, 1
+  ld (npc1_is_walking), a
+  
+  ; 3. Handle 1/3 Speed Delay
+  ld hl, npc1_move_timer
+  inc (hl)
+  ld a, (hl)
+  cp 3
+  jr c, .npc1_update_anim    ; If timer < 3, skip the actual X movement!
+  
+  ; 4. Apply Movement (Timer hit 3)
+  xor a
+  ld (hl), a                 ; Reset move timer to 0
+  
+  ld a, (npc1_direction)
+  or a                       ; Check if facing Right (0) or Left (1)
+  ld hl, sprite1_x
+  jr nz, .npc1_do_move_left
+
+.npc1_do_move_right:
+  inc (hl)                   ; NPC X++
+  jr .npc1_update_anim
+
+.npc1_do_move_left:
+  dec (hl)                   ; NPC X--
+  jr .npc1_update_anim
+
+  ; --- STOPPED STATE ---
+.npc1_stop_moving:
+  xor a
+  ld (npc1_is_walking), a
+  ld (npc1_move_timer), a    ; Reset timer so he starts fresh next time he moves
+
+  ; =========================================================
+  ; 5. NPC Animation Logic 
+  ; =========================================================
+.npc1_update_anim:
+  ld a, (npc1_is_walking)
+  or a                       
+  jr z, .npc1_set_idle_state      
+
+  ; --- WALKING ANIMATION ---
+  ld hl, npc1_anim_timer
+  inc (hl)
+  ld a, (hl)
+  cp 24                      ; Animates 3x slower to match speed!
+  jr c, .npc1_apply_anim          
+
+  ; Timer reached 24: Advance phase
+  xor a
+  ld (hl), a                 
+
+  ld hl, npc1_anim_frame
+  inc (hl)                   
+  ld a, (hl)
+  and 3                      
+  ld (hl), a
+
+.npc1_apply_anim:
+  ld a, (npc1_anim_frame)
+  ld c, 4                    
+  cp 3                       
+  jr z, .npc1_got_offset          
+  
+  add a, a
+  add a, a                   
+  ld c, a                    
+
+.npc1_got_offset:
+  ld a, (npc1_direction)
+  cp PLAYER_DIRECTION_RIGHT
+  jr z, .npc1_base_right
+
+  ld a, 0                    ; Left Base
+  jr .npc1_calc_pat
+  
+.npc1_base_right:
+  ld a, 12                   ; Right Base
+
+.npc1_calc_pat:
+  add a, c                   ; Base + Offset
+  ld (sprite1_pat), a        
+  ret                        
+
+  ; --- IDLE STATE ---
+.npc1_set_idle_state:
+  xor a
+  ld (npc1_anim_timer), a
+  ld (npc1_anim_frame), a  
+
+  ld a, (npc1_direction)
+  cp PLAYER_DIRECTION_RIGHT  
+  jr nz, .npc1_idle_left
+
+  ld a, 16                   ; Right Idle
+  ld (sprite1_pat), a
+  ret
+
+.npc1_idle_left:
+  ld a, 4                    ; Left Idle
+  ld (sprite1_pat), a
   ret
 
 
@@ -250,7 +384,7 @@ check_sprite_collisions:
 ; ==============================================================================
 init_sprite_attributes:
   ; 1. Copy the initial sprite attributes into the RAM shadow area
-  ld hl, stage1_sprite0_attributes_data
+  ld hl, stage1_sprites_attributes_data
   ld de, shadow_sat
   ld bc, INIT_NUM_SPRITES * 4
   ldir
@@ -261,3 +395,4 @@ init_sprite_attributes:
   ld bc, INIT_NUM_SPRITES * 4       ; We are copying 4 bytes (1 sprite)
   call write_vram_large
   ret
+
