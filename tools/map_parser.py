@@ -41,6 +41,11 @@ TILE_MAP = {
     # so you don't accidentally overwrite your numbers or letters!
     '#': 0x2A,  # Dynamic RAM Wall 1 (Backed by tile1_ram_buffer)
     '=': 0x2B,  # Dynamic RAM Wall 2 (Backed by tile2_ram_buffer)
+
+
+    
+    '-': 0x2C,  # _stair_pattern
+
 }
 
 

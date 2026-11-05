@@ -383,4 +383,13 @@ _tile1_pattern:
   defb %11111101    ; Row 5
   defb %11111101    ; Row 6
   defb %11111101    ; Row 7
+_stair_pattern:
+  defb %11111111    ; Row 0
+  defb %10000001    ; Row 1
+  defb %10000001    ; Row 2
+  defb %11111111    ; Row 3
+  defb %10000001    ; Row 4
+  defb %10000001    ; Row 5
+  defb %11111111    ; Row 6
+  defb %10000001    ; Row 7
 tile_patterns_end:

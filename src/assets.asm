@@ -144,7 +144,7 @@ init_tiles:
   ; -------------------------------------------------------------
   ld hl, _tile0_pattern      ; Source ROM graphic
   ld de, tile1_ram_buffer    ; Target RAM buffer
-  ld a, 1                    ; Tile ID 1
+  ld a, $2B                    ; Tile ID 1
   call setup_dynamic_tile
 
   ; ld hl, tile1_color
@@ -156,7 +156,7 @@ init_tiles:
   ; -------------------------------------------------------------
   ld hl, _tile1_pattern      ; Source ROM graphic
   ld de, tile2_ram_buffer    ; Target RAM buffer
-  ld a, 2                    ; Tile ID 2
+  ld a, $2C                    ; Tile ID 2
   call setup_dynamic_tile
 
   ; ld hl, tile2_color
