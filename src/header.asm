@@ -51,8 +51,7 @@ SPRITE_VRAM_BANK:  equ 1
 SPRITE_VRAM_ADDR:  equ $0000
 
 ; --- MSX1 SCREEN 2 Sprite Tables (Default Locations) ---
-VRAM_SCR2_SPR_ATTRIBS:  equ $1B00       ; Sprite Attribute Table (SAT) - 128 bytes
-VRAM_SCR2_SPR_PATTERNS: equ $3800       ; Sprite Pattern Generator (SPG) - 2048 bytes
+
 
 ; --- PPI (Programmable Peripheral Interface) ---
 ; Used for Keyboard scanning, Memory mapping, etc.
@@ -76,4 +75,35 @@ GREEN:        equ 12
 MAGENTA:      equ 13
 GRAY:         equ 14
 WHITE:        equ 15
+
+; ==============================================================================
+; MSX SCREEN 2 VRAM MAP
+; ==============================================================================
+
+; --- 1. Pattern Name Table (The 32x24 Map Grid) ---
+; One continuous 768-byte block.
+VRAM_SCR2_NAME_TABLE:       equ $1800  
+SCR2_MAP_SIZE:              equ 768
+
+; --- 2. Pattern Generator Tables (The Pixels) ---
+; Divided into 3 blocks of 256 tiles each (8 bytes per tile).
+VRAM_SCR2_PATTERN_TOP:      equ $0000  ; Name Table Rows 0-7
+VRAM_SCR2_PATTERN_MID:      equ $0800  ; Name Table Rows 8-15
+VRAM_SCR2_PATTERN_BOT:      equ $1000  ; Name Table Rows 16-23
+
+; --- 3. Color Tables (The Colors) ---
+; Divided into 3 blocks of 256 tiles each (8 bytes per tile).
+VRAM_SCR2_COLOR_TOP:        equ $2000  ; Name Table Rows 0-7
+VRAM_SCR2_COLOR_MID:        equ $2800  ; Name Table Rows 8-15
+VRAM_SCR2_COLOR_BOT:        equ $3000  ; Name Table Rows 16-23
+
+; --- 4. Sprites (SPRITE ATTRIBUTE TABLE) ---
+VRAM_SCR2_SPR_ATTRIBS:      equ $1B00  ; SAT - 128 bytes (32 sprites)
+; --- 5. Sprites (SPRITE PATTERN GENERTOR) --
+VRAM_SCR2_SPR_PATTERNS:     equ $3800  ; SPG - 2048 bytes (256 patterns)
+
+
+
+
+
 
