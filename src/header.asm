@@ -97,6 +97,11 @@ VRAM_SCR2_COLOR_TOP:        equ $2000  ; Name Table Rows 0-7
 VRAM_SCR2_COLOR_MID:        equ $2800  ; Name Table Rows 8-15
 VRAM_SCR2_COLOR_BOT:        equ $3000  ; Name Table Rows 16-23
 
+; --- Color Table Bank Bases ---
+COLOR_BANK0:         equ $2000   ; Top third (rows 0-7)
+COLOR_BANK1:         equ $2800   ; Middle third (rows 8-15)
+COLOR_BANK2:         equ $3000   ; Bottom third (rows 16-23)
+
 ; --- 4. Sprites (SPRITE ATTRIBUTE TABLE) ---
 VRAM_SCR2_SPR_ATTRIBS:      equ $1B00  ; SAT - 128 bytes (32 sprites)
 ; --- 5. Sprites (SPRITE PATTERN GENERTOR) --

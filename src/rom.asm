@@ -10,6 +10,7 @@ header:
 
 include "main.asm"
 include "background.asm"
+include "tiles_constants.asm"
 include "assets.asm"
 include "intro.asm"
 include "intro_map.asm"
