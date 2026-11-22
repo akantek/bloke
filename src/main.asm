@@ -6,7 +6,7 @@ main:
 
   di
   call boot
-  jp intro
+  jp background
 
 
 boot:
@@ -30,7 +30,6 @@ boot:
   call enable_16x16_sprites
 
   ; Load all static assets
-  call load_sprite_patterns 
   call load_tile_patterns
 
   ; Install VBlank hook

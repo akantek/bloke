@@ -4,6 +4,37 @@ number_color:
 alphabet_color:
   db $F1, $F1, $F1, $F1, $F1, $F1, $F1, $F1
 
+
+; ==============================================================================
+; Routine:      load_all_tile_patterns
+; Description:  Copies all tile graphics to all three thirds of SCREEN 2
+; Destroys:     A, BC, DE, HL
+; ==============================================================================
+load_tile_patterns:
+  di
+  
+  ; --- 1. Top Third (VRAM $0000) ---
+  ld hl, tile_patterns_start
+  ld de, $0000
+  ld bc, tile_patterns_end - tile_patterns_start
+  call write_vram_large
+  
+  ; --- 2. Middle Third (VRAM $0800) ---
+  ld hl, tile_patterns_start
+  ld de, $0800
+  ld bc, tile_patterns_end - tile_patterns_start
+  call write_vram_large
+  
+  ; --- 3. Bottom Third (VRAM $1000) ---
+  ld hl, tile_patterns_start
+  ld de, $1000
+  ld bc, tile_patterns_end - tile_patterns_start
+  call write_vram_large
+  
+  ei
+  ret
+
+
 ; ==============================================================================
 ; Routine:      load_sprite_patterns
 ; Description:  Copies all auto-generated sprite graphics from ROM to the 
@@ -63,36 +94,6 @@ loadSpriteAttributes:
 
 
 ; ==============================================================================
-; Routine:      load_all_tile_patterns
-; Description:  Copies all tile graphics to all three thirds of SCREEN 2
-; Destroys:     A, BC, DE, HL
-; ==============================================================================
-load_tile_patterns:
-  di
-  
-  ; --- 1. Top Third (VRAM $0000) ---
-  ld hl, tile_patterns_start
-  ld de, $0000
-  ld bc, tile_patterns_end - tile_patterns_start
-  call write_vram_large
-  
-  ; --- 2. Middle Third (VRAM $0800) ---
-  ld hl, tile_patterns_start
-  ld de, $0800
-  ld bc, tile_patterns_end - tile_patterns_start
-  call write_vram_large
-  
-  ; --- 3. Bottom Third (VRAM $1000) ---
-  ld hl, tile_patterns_start
-  ld de, $1000
-  ld bc, tile_patterns_end - tile_patterns_start
-  call write_vram_large
-  
-  ei
-  ret
-
-
-; ==============================================================================
 ; Routine:      load_all_tile_colors
 ; Description:  Copies all tile colors to all three thirds of SCREEN 2
 ; ==============================================================================
@@ -122,7 +123,7 @@ load_tile_colors:
 
 
 init_tiles:
-  di
+  ;di
   
   ; Note: If load_all_tile_colors exists in your assets.asm, call it here, 
   ; otherwise remove it if you are setting colors manually below.
@@ -130,22 +131,22 @@ init_tiles:
   ; -------------------------------------------------------------
   ; Setup Tile ID 0x00 (Background/Water)
   ; -------------------------------------------------------------
-  ld hl, _blank_pattern      ; Source ROM graphic
-  ld de, tile0_ram_buffer    ; Target RAM buffer
-  ld a, 0                    ; Tile ID 0
-  call setup_dynamic_tile
+  ;ld hl, _blank_pattern      ; Source ROM graphic
+  ;ld de, tile0_ram_buffer    ; Target RAM buffer
+  ;ld a, 0                    ; Tile ID 0
+  ;call setup_dynamic_tile
 
-  ld hl, tile0_color
-  ld a, 0
-  call load_tile_color
+  ;ld hl, tile0_color
+  ;ld a, 0
+  ;call load_tile_color
 
   ; -------------------------------------------------------------
   ; Setup Tile ID 0x01 (Wall 1)
   ; -------------------------------------------------------------
-  ld hl, _tile0_pattern      ; Source ROM graphic
-  ld de, tile1_ram_buffer    ; Target RAM buffer
-  ld a, $2B                    ; Tile ID 1
-  call setup_dynamic_tile
+  ;ld hl, _tile0_pattern      ; Source ROM graphic
+  ;ld de, tile1_ram_buffer    ; Target RAM buffer
+  ;ld a, $2B                    ; Tile ID 1
+  ;call setup_dynamic_tile
 
   ; ld hl, tile1_color
   ; ld a, 1
@@ -154,19 +155,19 @@ init_tiles:
   ; -------------------------------------------------------------
   ; Setup Tile ID 0x02 (Wall 2)
   ; -------------------------------------------------------------
-  ld hl, _tile1_pattern      ; Source ROM graphic
-  ld de, tile2_ram_buffer    ; Target RAM buffer
-  ld a, $2C                    ; Tile ID 2
-  call setup_dynamic_tile
+  ;ld hl, _tile1_pattern      ; Source ROM graphic
+  ;ld de, tile2_ram_buffer    ; Target RAM buffer
+  ;ld a, $2C                    ; Tile ID 2
+  ;call setup_dynamic_tile
 
   ; ld hl, tile2_color
   ; ld a, 2
   ; call load_tile_color
 
   ; Set the tile name for screen position 0 (Top-left)
-  ld hl, $1800        
-  ld a, 0             
-  call WRTVRM         
+  ;ld hl, $1800        
+  ;ld a, 0             
+  ;call WRTVRM         
   
   ret
 

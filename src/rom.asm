@@ -9,6 +9,7 @@ header:
   dw 0, 0, 0
 
 include "main.asm"
+include "background.asm"
 include "assets.asm"
 include "intro.asm"
 include "intro_map.asm"

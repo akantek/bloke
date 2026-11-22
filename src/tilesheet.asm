@@ -365,31 +365,67 @@ _space_pattern:
   defb %00000000    ; Row 5
   defb %00000000    ; Row 6
   defb %00000000    ; Row 7
-_tile0_pattern:
-  defb %00111111    ; Row 0
-  defb %10011111    ; Row 1
-  defb %11001111    ; Row 2
-  defb %00000000    ; Row 3
-  defb %11100111    ; Row 4
-  defb %11110011    ; Row 5
-  defb %11111001    ; Row 6
-  defb %11111100    ; Row 7
-_tile1_pattern:
-  defb %11011111    ; Row 0
-  defb %11011111    ; Row 1
-  defb %11011111    ; Row 2
-  defb %00000000    ; Row 3
-  defb %11111101    ; Row 4
-  defb %11111101    ; Row 5
-  defb %11111101    ; Row 6
-  defb %11111101    ; Row 7
-_stair_pattern:
+_background1_pattern:
   defb %11111111    ; Row 0
-  defb %10000001    ; Row 1
-  defb %10000001    ; Row 2
+  defb %00000000    ; Row 1
+  defb %00000000    ; Row 2
+  defb %00000000    ; Row 3
+  defb %00000000    ; Row 4
+  defb %00000000    ; Row 5
+  defb %00000000    ; Row 6
+  defb %00000000    ; Row 7
+_background2_pattern:
+  defb %11111111    ; Row 0
+  defb %11111111    ; Row 1
+  defb %00000000    ; Row 2
+  defb %00000000    ; Row 3
+  defb %00000000    ; Row 4
+  defb %00000000    ; Row 5
+  defb %00000000    ; Row 6
+  defb %00000000    ; Row 7
+_background3_pattern:
+  defb %11111111    ; Row 0
+  defb %11111111    ; Row 1
+  defb %11111111    ; Row 2
+  defb %00000000    ; Row 3
+  defb %00000000    ; Row 4
+  defb %00000000    ; Row 5
+  defb %00000000    ; Row 6
+  defb %00000000    ; Row 7
+_background4_pattern:
+  defb %11111111    ; Row 0
+  defb %11111111    ; Row 1
+  defb %11111111    ; Row 2
   defb %11111111    ; Row 3
-  defb %10000001    ; Row 4
-  defb %10000001    ; Row 5
+  defb %00000000    ; Row 4
+  defb %00000000    ; Row 5
+  defb %00000000    ; Row 6
+  defb %00000000    ; Row 7
+_background5_pattern:
+  defb %11111111    ; Row 0
+  defb %11111111    ; Row 1
+  defb %11111111    ; Row 2
+  defb %11111111    ; Row 3
+  defb %11111111    ; Row 4
+  defb %00000000    ; Row 5
+  defb %00000000    ; Row 6
+  defb %00000000    ; Row 7
+_background6_pattern:
+  defb %11111111    ; Row 0
+  defb %11111111    ; Row 1
+  defb %11111111    ; Row 2
+  defb %11111111    ; Row 3
+  defb %11111111    ; Row 4
+  defb %11111111    ; Row 5
+  defb %00000000    ; Row 6
+  defb %00000000    ; Row 7
+_background7_pattern:
+  defb %11111111    ; Row 0
+  defb %11111111    ; Row 1
+  defb %11111111    ; Row 2
+  defb %11111111    ; Row 3
+  defb %11111111    ; Row 4
+  defb %11111111    ; Row 5
   defb %11111111    ; Row 6
-  defb %10000001    ; Row 7
+  defb %00000000    ; Row 7
 tile_patterns_end:

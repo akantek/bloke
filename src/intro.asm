@@ -303,25 +303,25 @@ set_dynamic_tiles_color:
 
 init_dynamic_tiles:
   ; 1. Copy the base pattern from ROM to our RAM buffer
-  ld hl, _tile0_pattern     ; Source: Pattern in ROM
-  ld de, tile0_ram_buffer   ; Dest: RAM Buffer
-  ld bc, 8                  ; 8 bytes long
-  ldir                      ; Block copy
+  ;ld hl, _tile0_pattern     ; Source: Pattern in ROM
+  ;ld de, tile0_ram_buffer   ; Dest: RAM Buffer
+  ;ld bc, 8                  ; 8 bytes long
+  ;ldir                      ; Block copy
 
   ; 2. Top Third: Upload RAM buffer to Tile $2A pattern slot
-  ld hl, tile0_ram_buffer
-  ld de, $0150              ; Base $0000 + Offset $0150
-  call ldirvm_8
+  ;ld hl, tile0_ram_buffer
+  ;ld de, $0150              ; Base $0000 + Offset $0150
+  ;call ldirvm_8
 
   ; 3. Middle Third: Upload RAM buffer to Tile $2A pattern slot
-  ld hl, tile0_ram_buffer
-  ld de, $0950              ; Base $0800 + Offset $0150
-  call ldirvm_8
+  ;ld hl, tile0_ram_buffer
+  ;ld de, $0950              ; Base $0800 + Offset $0150
+  ;call ldirvm_8
 
   ; 4. Bottom Third: Upload RAM buffer to Tile $2A pattern slot
-  ld hl, tile0_ram_buffer
-  ld de, $1150              ; Base $1000 + Offset $0150
-  call ldirvm_8
+  ;ld hl, tile0_ram_buffer
+  ;ld de, $1150              ; Base $1000 + Offset $0150
+  ;call ldirvm_8
 
   ret
 
