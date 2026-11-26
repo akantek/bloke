@@ -1,6 +1,6 @@
 ; ==============================================================================
 ; Tile ID Constants (SCREEN 2)
-; Total: 61 tiles (0..60 / $00..$3C), 488 bytes ($01E8) per pattern bank
+; Total: 96 tiles (0..95 / $00..$5F), 768 bytes ($0300) per pattern bank
 ; ==============================================================================
 
 ; --- Blank & Digits ---
@@ -49,30 +49,13 @@ TILE_EXCLAMATION:    equ 37      ; $25 (offset $0128)
 TILE_SEMI_COLON:     equ 38      ; $26 (offset $0130)
 TILE_SPACE:          equ 39      ; $27 (offset $0138)
 
-; --- Background 1 (1-line strips) ---
-TILE_BACKGROUND1_A:  equ 40      ; $28 (offset $0140)
-TILE_BACKGROUND1_B:  equ 41      ; $29 (offset $0148)
-TILE_BACKGROUND1_C:  equ 42      ; $2A (offset $0150)
-TILE_BACKGROUND1_D:  equ 43      ; $2B (offset $0158)
-TILE_BACKGROUND1_E:  equ 44      ; $2C (offset $0160)
-TILE_BACKGROUND1_F:  equ 45      ; $2D (offset $0168)
-TILE_BACKGROUND1_G:  equ 46      ; $2E (offset $0170)
-TILE_BACKGROUND1_H:  equ 47      ; $2F (offset $0178)
-
-; --- Background 2 (2-line strips) ---
-TILE_BACKGROUND2_A:  equ 48      ; $30 (offset $0180)
-TILE_BACKGROUND2_B:  equ 49      ; $31 (offset $0188)
-TILE_BACKGROUND2_C:  equ 50      ; $32 (offset $0190)
-TILE_BACKGROUND2_D:  equ 51      ; $33 (offset $0198)
-TILE_BACKGROUND2_E:  equ 52      ; $34 (offset $01A0)
-TILE_BACKGROUND2_F:  equ 53      ; $35 (offset $01A8)
-TILE_BACKGROUND2_G:  equ 54      ; $36 (offset $01B0)
-TILE_BACKGROUND2_H:  equ 55      ; $37 (offset $01B8)
-
-; --- Background 3..7 ---
-TILE_BACKGROUND3_A:    equ 56      ; $38 (offset $01C0)
-TILE_BACKGROUND4_A:    equ 57      ; $39 (offset $01C8)
-TILE_BACKGROUND5_A:    equ 58      ; $3A (offset $01D0)
-TILE_BACKGROUND6_A:    equ 59      ; $3B (offset $01D8)
-TILE_BACKGROUND7_A:    equ 60      ; $3C (offset $01E0)
+; --- Background Lines (1-line strips) ---
+TILE_BACKGROUND_LINE_A:  equ 40      ; $28 (offset $0140)
+TILE_BACKGROUND_LINE_B:  equ 41      ; $29 (offset $0148)
+TILE_BACKGROUND_LINE_C:  equ 42      ; $2A (offset $0150)
+TILE_BACKGROUND_LINE_D:  equ 43      ; $2B (offset $0158)
+TILE_BACKGROUND_LINE_E:  equ 44      ; $2C (offset $0160)
+TILE_BACKGROUND_LINE_F:  equ 45      ; $2D (offset $0168)
+TILE_BACKGROUND_LINE_G:  equ 46      ; $2E (offset $0170)
+TILE_BACKGROUND_LINE_H:  equ 47      ; $2F (offset $0178)
 

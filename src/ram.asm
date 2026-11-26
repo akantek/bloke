@@ -32,6 +32,10 @@ npc1_direction:  equ $C02D
 npc1_is_walking: equ $C02E
 npc1_move_timer: equ $C02F
 
+bg_timer:	equ $C03A
+bg_frame1:	equ $C03B
+bg_frame2:	equ $C03C
+
 ; ========================================================
 ; Shadow Sprite Attribute Table (SAT) in RAM
 ; 1 Sprite = 4 Bytes, 32 Sprites Max (128 Bytes Total)

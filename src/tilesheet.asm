@@ -365,7 +365,7 @@ _space_pattern:
   defb %00000000    ; Row 5
   defb %00000000    ; Row 6
   defb %00000000    ; Row 7
-_background1_a_pattern:
+_background_line_a_pattern:
   defb %11111111    ; Row 0
   defb %00000000    ; Row 1
   defb %00000000    ; Row 2
@@ -374,7 +374,7 @@ _background1_a_pattern:
   defb %00000000    ; Row 5
   defb %00000000    ; Row 6
   defb %00000000    ; Row 7
-_background1_b_pattern:
+_background_line_b_pattern:
   defb %00000000    ; Row 0
   defb %11111111    ; Row 1
   defb %00000000    ; Row 2
@@ -383,7 +383,7 @@ _background1_b_pattern:
   defb %00000000    ; Row 5
   defb %00000000    ; Row 6
   defb %00000000    ; Row 7
-_background1_c_pattern:
+_background_line_c_pattern:
   defb %00000000    ; Row 0
   defb %00000000    ; Row 1
   defb %11111111    ; Row 2
@@ -392,7 +392,7 @@ _background1_c_pattern:
   defb %00000000    ; Row 5
   defb %00000000    ; Row 6
   defb %00000000    ; Row 7
-_background1_d_pattern:
+_background_line_d_pattern:
   defb %00000000    ; Row 0
   defb %00000000    ; Row 1
   defb %00000000    ; Row 2
@@ -401,7 +401,7 @@ _background1_d_pattern:
   defb %00000000    ; Row 5
   defb %00000000    ; Row 6
   defb %00000000    ; Row 7
-_background1_e_pattern:
+_background_line_e_pattern:
   defb %00000000    ; Row 0
   defb %00000000    ; Row 1
   defb %00000000    ; Row 2
@@ -410,7 +410,7 @@ _background1_e_pattern:
   defb %00000000    ; Row 5
   defb %00000000    ; Row 6
   defb %00000000    ; Row 7
-_background1_f_pattern:
+_background_line_f_pattern:
   defb %00000000    ; Row 0
   defb %00000000    ; Row 1
   defb %00000000    ; Row 2
@@ -419,7 +419,7 @@ _background1_f_pattern:
   defb %11111111    ; Row 5
   defb %00000000    ; Row 6
   defb %00000000    ; Row 7
-_background1_g_pattern:
+_background_line_g_pattern:
   defb %00000000    ; Row 0
   defb %00000000    ; Row 1
   defb %00000000    ; Row 2
@@ -428,7 +428,7 @@ _background1_g_pattern:
   defb %00000000    ; Row 5
   defb %11111111    ; Row 6
   defb %00000000    ; Row 7
-_background1_h_pattern:
+_background_line_h_pattern:
   defb %00000000    ; Row 0
   defb %00000000    ; Row 1
   defb %00000000    ; Row 2
@@ -437,121 +437,4 @@ _background1_h_pattern:
   defb %00000000    ; Row 5
   defb %00000000    ; Row 6
   defb %11111111    ; Row 7
-_background2_a_pattern:
-  defb %11111111    ; Row 0
-  defb %11111111    ; Row 1
-  defb %00000000    ; Row 2
-  defb %00000000    ; Row 3
-  defb %00000000    ; Row 4
-  defb %00000000    ; Row 5
-  defb %00000000    ; Row 6
-  defb %00000000    ; Row 7
-_background2_b_pattern:
-  defb %00000000    ; Row 0
-  defb %11111111    ; Row 1
-  defb %11111111    ; Row 2
-  defb %00000000    ; Row 3
-  defb %00000000    ; Row 4
-  defb %00000000    ; Row 5
-  defb %00000000    ; Row 6
-  defb %00000000    ; Row 7
-_background2_c_pattern:
-  defb %00000000    ; Row 0
-  defb %00000000    ; Row 1
-  defb %11111111    ; Row 2
-  defb %11111111    ; Row 3
-  defb %00000000    ; Row 4
-  defb %00000000    ; Row 5
-  defb %00000000    ; Row 6
-  defb %00000000    ; Row 7
-_background2_d_pattern:
-  defb %00000000    ; Row 0
-  defb %00000000    ; Row 1
-  defb %00000000    ; Row 2
-  defb %11111111    ; Row 3
-  defb %11111111    ; Row 4
-  defb %00000000    ; Row 5
-  defb %00000000    ; Row 6
-  defb %00000000    ; Row 7
-_background2_e_pattern:
-  defb %00000000    ; Row 0
-  defb %00000000    ; Row 1
-  defb %00000000    ; Row 2
-  defb %00000000    ; Row 3
-  defb %11111111    ; Row 4
-  defb %11111111    ; Row 5
-  defb %00000000    ; Row 6
-  defb %00000000    ; Row 7
-_background2_f_pattern:
-  defb %00000000    ; Row 0
-  defb %00000000    ; Row 1
-  defb %00000000    ; Row 2
-  defb %00000000    ; Row 3
-  defb %00000000    ; Row 4
-  defb %11111111    ; Row 5
-  defb %11111111    ; Row 6
-  defb %00000000    ; Row 7
-_background2_g_pattern:
-  defb %00000000    ; Row 0
-  defb %00000000    ; Row 1
-  defb %00000000    ; Row 2
-  defb %00000000    ; Row 3
-  defb %00000000    ; Row 4
-  defb %00000000    ; Row 5
-  defb %11111111    ; Row 6
-  defb %11111111    ; Row 7
-_background2_h_pattern:
-  defb %11111111    ; Row 0
-  defb %00000000    ; Row 1
-  defb %00000000    ; Row 2
-  defb %00000000    ; Row 3
-  defb %00000000    ; Row 4
-  defb %00000000    ; Row 5
-  defb %00000000    ; Row 6
-  defb %11111111    ; Row 7
-_background3_pattern:
-  defb %11111111    ; Row 0
-  defb %11111111    ; Row 1
-  defb %11111111    ; Row 2
-  defb %00000000    ; Row 3
-  defb %00000000    ; Row 4
-  defb %00000000    ; Row 5
-  defb %00000000    ; Row 6
-  defb %00000000    ; Row 7
-_background4_pattern:
-  defb %11111111    ; Row 0
-  defb %11111111    ; Row 1
-  defb %11111111    ; Row 2
-  defb %11111111    ; Row 3
-  defb %00000000    ; Row 4
-  defb %00000000    ; Row 5
-  defb %00000000    ; Row 6
-  defb %00000000    ; Row 7
-_background5_pattern:
-  defb %11111111    ; Row 0
-  defb %11111111    ; Row 1
-  defb %11111111    ; Row 2
-  defb %11111111    ; Row 3
-  defb %11111111    ; Row 4
-  defb %00000000    ; Row 5
-  defb %00000000    ; Row 6
-  defb %00000000    ; Row 7
-_background6_pattern:
-  defb %11111111    ; Row 0
-  defb %11111111    ; Row 1
-  defb %11111111    ; Row 2
-  defb %11111111    ; Row 3
-  defb %11111111    ; Row 4
-  defb %11111111    ; Row 5
-  defb %00000000    ; Row 6
-  defb %00000000    ; Row 7
-_background7_pattern:
-  defb %11111111    ; Row 0
-  defb %11111111    ; Row 1
-  defb %11111111    ; Row 2
-  defb %11111111    ; Row 3
-  defb %11111111    ; Row 4
-  defb %11111111    ; Row 5
-  defb %11111111    ; Row 6
-  defb %00000000    ; Row 7
 tile_patterns_end:
