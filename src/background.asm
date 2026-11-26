@@ -80,6 +80,7 @@ background_init:
 
 background:
   call background_init
+  call draw_stars
 
 .background_loop:
   call wait_vsync             ; Spin until 60 Hz VBlank fires

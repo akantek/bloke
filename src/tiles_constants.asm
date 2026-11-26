@@ -59,3 +59,5 @@ TILE_BACKGROUND_LINE_F:  equ 45      ; $2D (offset $0168)
 TILE_BACKGROUND_LINE_G:  equ 46      ; $2E (offset $0170)
 TILE_BACKGROUND_LINE_H:  equ 47      ; $2F (offset $0178)
 
+; --- Stars ---
+TILE_STARS_0:  equ 48       ; $30 (offset $0180) 

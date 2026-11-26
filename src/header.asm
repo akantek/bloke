@@ -107,8 +107,3 @@ VRAM_SCR2_SPR_ATTRIBS:      equ $1B00  ; SAT - 128 bytes (32 sprites)
 ; --- 5. Sprites (SPRITE PATTERN GENERTOR) --
 VRAM_SCR2_SPR_PATTERNS:     equ $3800  ; SPG - 2048 bytes (256 patterns)
 
-
-
-
-
-

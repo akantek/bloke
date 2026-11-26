@@ -437,4 +437,13 @@ _background_line_h_pattern:
   defb %00000000    ; Row 5
   defb %00000000    ; Row 6
   defb %11111111    ; Row 7
+_star_0_pattern:
+  defb %00000000    ; Row 0
+  defb %00000000    ; Row 1
+  defb %00010000    ; Row 2
+  defb %00000000    ; Row 3
+  defb %00000000    ; Row 4
+  defb %00000000    ; Row 5
+  defb %00000000    ; Row 6
+  defb %00000000    ; Row 7
 tile_patterns_end:
