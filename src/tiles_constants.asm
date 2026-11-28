@@ -61,3 +61,10 @@ TILE_BACKGROUND_LINE_H:  equ 47      ; $2F (offset $0178)
 
 ; --- Stars ---
 TILE_STARS_0:  equ 48       ; $30 (offset $0180) 
+
+; --- Title Graphics ---
+TILE_TITLE_DIAG_TOP_RIGHT:    equ 49    ; $31 (offset $0188)
+TILE_TITLE_DIAG_TOP_LEFT:     equ 50    ; $32 (offset $0190)
+TILE_TITLE_DIAG_BOTTOM_RIGHT: equ 51    ; $33 (offset $0198)
+TILE_TITLE_LINE:              equ 52    ; $34 (offset $01A0)
+

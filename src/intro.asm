@@ -1,67 +1,38 @@
-tile0_color:
-  db $11, $11, $11, $11, $11, $11, $11, $11
-
-static_tile_color:
-  db $F4, $F4, $F4, $F4, $F4, $F4, $F4, $F4
-
-dynamic_tile_color:
-  db $F4, $F4, $F4, $F4, $F4, $F4, $F4, $F4
-
-push_space_text:
-  ; "PUSH SPACE KEY" mapped to your specific Tile IDs
-  db $1A, $1F, $1D, $12, $27, $1D, $1A, $0B, $0D, $0F, $27, $15, $0F, $23
-push_space_text_end:
-
-push_space_clear:
-  ; 14 Space characters ($27)
-  db $27, $27, $27, $27, $27, $27, $27, $27, $27, $27, $27, $27, $27, $27
-
+INTRO_COLOR_WHITE:   equ (WHITE << 4) | BLACK   ; $F1 - White on Black
+SCR2_COLOR_PAGES:    equ 24                     ; 3 banks * 2048 bytes / 256 bytes
 
 intro:
-  di
-
-  ; SCREEN OFF
+  ; SCREEN OFF (Note: BIOS DISSCR enables interrupts internally)
   call DISSCR
 
-  ; clear(SCREEN2)
+  ; clear(SCREEN2) (Note: clear_screen2 ends with EI)
   call clear_screen2
 
-  ; Init vars
-  ; frame_count = 0
-  ld hl, frame_count
-  ld (hl), 0
-  ; intro_state = 0
-  ld hl, intro_state
-  ld (hl), 0
-  ; push_space_anim_frame = 0
-  ld hl, push_space_anim_frame
-  ld (hl), 0
-  
-  ; Set up
-  call set_tile0_colors
-  call set_numbers_colors
-  call set_alphabet_colors
-  call set_static_tiles_color
-  call init_dynamic_tiles
-  call set_dynamic_tiles_color
-  
-  ; Update PGT for tile $2A (dynamic tile)
-  ; TOP area
-  ld hl, tile0_ram_buffer 
-  ld de, $0150
-  call ldirvm_8
-  ; MIDDLE area
-  ld hl, tile0_ram_buffer 
-  ld de, $0950
-  call ldirvm_8
-  ; BOTTOM area
-  ld hl, tile0_ram_buffer
-  ld de, $1150
-  call ldirvm_8
+  ; Disable interrupts before direct VDP writes
+  di
 
-  ; Load the full screen map
+  ; --- 1. Paint all 3 Color Banks ($2000..$37FF) White on Black ---
+  ld hl, VRAM_SCR2_COLOR_TOP
+  ld c, SCR2_COLOR_PAGES       ; 24 pages * 256 bytes = 6144 bytes
+.paint_color_banks:
+  ld a, INTRO_COLOR_WHITE
+  ld b, 0                      ; B = 0 writes 256 bytes in draw_tile_row
+  call draw_tile_row           ; Destroys A, B, D (preserves C and HL)
+  inc h                        ; Next 256-byte page ($2000 -> $2100 ... -> $3700)
+  dec c
+  jr nz, .paint_color_banks
+
+  ; --- 2. Init vars ---
+  xor a
+  ld (frame_count), a
+  ld (intro_state), a
+  ld (push_space_anim_frame), a
+
+  ; --- 3. Load the intro screen Name Table ---
   ld hl, intro_map
-  call load_stage_map
+  ld de, VRAM_SCR2_NAME_TABLE
+  ld bc, SCR2_MAP_SIZE
+  call write_vram_large
 
   ; SCREEN ON
   call ENASCR
@@ -69,259 +40,5 @@ intro:
   ei
 
 .intro_loop:
-  call wait_vsync
-.intro_vblank_trace_start:
-  ; ---------------------------------------------------------
-  ; 1. VDP UPDATES (Safe Zone - inside VBlank)
-  ;    ~4.5 ms (70 scanlines)
-  ; ---------------------------------------------------------
-
-  ; Rotate title tiles
-  ; Update VDP with shifted tile
-  ld hl, tile0_ram_buffer 
-  ld de, $0150          
-  call ldirvm_8
-
-  ld hl, tile0_ram_buffer 
-  ld de, $0950          
-  call ldirvm_8
-
-  ld hl, tile0_ram_buffer
-  ld de, $1150
-  call ldirvm_8 
-
-  ; --- Blinking Text Logic & VRAM Write ---
-  ld hl, push_space_anim_frame
-  inc (hl)
-  ld a, (hl)
-  ld b, a              ; Backup the animation frame into B
-  
-  ; Check if we are in the transition state
-  ld a, (intro_state)
-  or a
-  jr nz, .fast_blink
-  
-.slow_blink:
-  ld a, b              ; Restore animation frame
-  and %00100000        ; Normal: flip every 32 frames
-  jr .check_blink
-  
-.fast_blink:
-  ld a, b              ; Restore animation frame
-  and %00001000        ; Fast: flip every 8 frames
-  
-.check_blink:
-  jr z, .draw_text
-  
-.draw_spaces:
-  ld hl, push_space_clear
-  jr .update_text_vram
-  
-.draw_text:
-  ld hl, push_space_text
-
-.update_text_vram:
-  ld de, $1A69                               
-  ld bc, 14 
-  call LDIRVM
-
-.intro_vblank_trace_end:
-  ; ---------------------------------------------------------
-  ; 2. INTRO LOGIC (Outside VBlank, CPU has plenty of time)
-  ;    ~12.2 ms (192 scanlines)
-  ; ---------------------------------------------------------
-  
-  ; --- Tile shift logic ---
-  ld a, (frame_count)
-  cp 5
-  jr nz, .intro_tile_skip_if
-
-  ld hl, tile0_ram_buffer
-  call shift_pattern_left
-
-  ; frame_count = 0
-  ld hl, frame_count
-  ld (hl), 0
-  jr .check_input
-
-.intro_tile_skip_if:
-  ld hl, frame_count
-  inc (hl)
-
-  ; ---------------------------------------------------------
-  ; 3. INPUT & TRANSITION LOGIC
-  ; ---------------------------------------------------------
-  
-.check_input:
-  ld a, (intro_state)
-  or a
-  jr nz, .handle_countdown   ; If state is 1, jump over the keyboard check
-
-.check_space:
-  call scan_keypad
-  bit KEY_SPACE_BIT, a
-  jp nz, .intro_loop         ; If space NOT pressed (bit is 1), go to next frame
-
-  ; =========================================================
-  ; Space WAS pressed! Initialize the transition.
-  ; ========================================================= 
-  call play_start_sound      ; Play the chime (triggers once)
-
-  ; Switch state to 1 to lock out keyboard and enable fast blink
-  ld a, 1
-  ld (intro_state), a
-  
-  ; Start 2-second timer
-  ld a, 120                  ; 120 frames = exactly 2 seconds at 60Hz
-  ld (intro_countdown), a
-  jp .intro_loop
-
-.handle_countdown:
-  ld hl, intro_countdown
-  dec (hl)                   ; Tick down the timer (modifies memory directly)
-  jp z, stage1               ; 2 seconds are up! Jump to stage1
-  
-  jp .intro_loop             ; Otherwise, keep waiting
-
-
-set_tile0_colors:
-  ; 1. Top Third (Color Table base $2000 + Tile 0 offset $00)
-  ld hl, tile0_color
-  ld de, $2000
-  call ldirvm_8
-  
-  ; 2. Middle Third (Color Table base $2800 + Tile 0 offset $00)
-  ld hl, tile0_color
-  ld de, $2800
-  call ldirvm_8
-  
-  ; 3. Bottom Third (Color Table base $3000 + Tile 0 offset $00)
-  ld hl, tile0_color
-  ld de, $3000
-  call ldirvm_8
-  
-  ret
-
-
-set_static_tiles_color:
-  ; --- 1. Top Third ---
-  ld de, $2140             ; VRAM Destination for Tile $28 (Offset $0140)
-  ld b, 2                  ; Loop 2 times (Tiles $28 and $29)
-.top_static_loop:
-  push bc
-  push de                  ; Protect VRAM destination address
-  ld hl, static_tile_color ; Load source color
-  call ldirvm_8 
-  pop hl                   ; Pop the old DE into HL
-  ld bc, 8
-  add hl, bc               ; Manually advance to the next tile's VRAM address
-  ex de, hl                ; Put it back into DE
-  pop bc                 
-  djnz .top_static_loop
-
-  ; --- 2. Middle Third ---
-  ld de, $2940             ; VRAM Destination for Tile $28 (Offset $0140)
-  ld b, 2               
-.mid_static_loop:
-  push bc
-  push de
-  ld hl, static_tile_color
-  call ldirvm_8
-  pop hl
-  ld bc, 8
-  add hl, bc
-  ex de, hl
-  pop bc
-  djnz .mid_static_loop
-
-  ; --- 3. Bottom Third ---
-  ld de, $3140             ; VRAM Destination for Tile $28 (Offset $0140)
-  ld b, 2               
-.bot_static_loop:
-  push bc
-  push de
-  ld hl, static_tile_color
-  call ldirvm_8
-  pop hl
-  ld bc, 8
-  add hl, bc
-  ex de, hl
-  pop bc
-  djnz .bot_static_loop
-
-  ret
-
-
-set_dynamic_tiles_color:
-  ; --- 1. Top Third ---
-  ld de, $2150             ; VRAM Destination for Tile $2A (Offset $0150)
-  ld b, 2                  ; Loop 2 times (Tiles $2A and $2B)
-.top_dynamic_loop:
-  push bc
-  push de                  ; Protect VRAM destination address
-  ld hl, dynamic_tile_color ; Load source color
-  call ldirvm_8 
-  pop hl                   ; Pop the old DE into HL
-  ld bc, 8
-  add hl, bc               ; Manually advance to the next tile's VRAM address
-  ex de, hl                ; Put it back into DE
-  pop bc                 
-  djnz .top_dynamic_loop
-
-  ; --- 2. Middle Third ---
-  ld de, $2950             ; VRAM Destination for Tile $2A (Offset $0150)
-  ld b, 2               
-.mid_dynamic_loop:
-  push bc
-  push de
-  ld hl, dynamic_tile_color
-  call ldirvm_8
-  pop hl
-  ld bc, 8
-  add hl, bc
-  ex de, hl
-  pop bc
-  djnz .mid_dynamic_loop
-
-  ; --- 3. Bottom Third ---
-  ld de, $3150             ; VRAM Destination for Tile $2A (Offset $0150)
-  ld b, 2               
-.bot_dynamic_loop:
-  push bc
-  push de
-  ld hl, dynamic_tile_color
-  call ldirvm_8
-  pop hl
-  ld bc, 8
-  add hl, bc
-  ex de, hl
-  pop bc
-  djnz .bot_dynamic_loop
-
-  ret
-
-
-init_dynamic_tiles:
-  ; 1. Copy the base pattern from ROM to our RAM buffer
-  ;ld hl, _tile0_pattern     ; Source: Pattern in ROM
-  ;ld de, tile0_ram_buffer   ; Dest: RAM Buffer
-  ;ld bc, 8                  ; 8 bytes long
-  ;ldir                      ; Block copy
-
-  ; 2. Top Third: Upload RAM buffer to Tile $2A pattern slot
-  ;ld hl, tile0_ram_buffer
-  ;ld de, $0150              ; Base $0000 + Offset $0150
-  ;call ldirvm_8
-
-  ; 3. Middle Third: Upload RAM buffer to Tile $2A pattern slot
-  ;ld hl, tile0_ram_buffer
-  ;ld de, $0950              ; Base $0800 + Offset $0150
-  ;call ldirvm_8
-
-  ; 4. Bottom Third: Upload RAM buffer to Tile $2A pattern slot
-  ;ld hl, tile0_ram_buffer
-  ;ld de, $1150              ; Base $1000 + Offset $0150
-  ;call ldirvm_8
-
-  ret
+  jr .intro_loop
 

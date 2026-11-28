@@ -6,7 +6,7 @@ main:
 
   di
   call boot
-  jp background
+  jp intro
 
 
 boot:
@@ -25,6 +25,8 @@ boot:
   ; SCREEN 2
   ld a, 2
   call CHGMOD
+
+  di
 
   ; Initialize VDP
   call enable_16x16_sprites

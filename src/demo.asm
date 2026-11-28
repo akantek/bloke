@@ -1,3 +1,21 @@
+tile0_color:
+  db $11, $11, $11, $11, $11, $11, $11, $11
+
+static_tile_color:
+  db $F4, $F4, $F4, $F4, $F4, $F4, $F4, $F4
+
+dynamic_tile_color:
+  db $F4, $F4, $F4, $F4, $F4, $F4, $F4, $F4
+
+push_space_text:
+  ; "PUSH SPACE KEY" mapped to your specific Tile IDs
+  db $1A, $1F, $1D, $12, $27, $1D, $1A, $0B, $0D, $0F, $27, $15, $0F, $23
+push_space_text_end:
+
+push_space_clear:
+  ; 14 Space characters ($27)
+  db $27, $27, $27, $27, $27, $27, $27, $27, $27, $27, $27, $27, $27, $27
+
 demo:
   di
   call init_tiles

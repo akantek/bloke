@@ -9,8 +9,8 @@ header:
   dw 0, 0, 0
 
 include "main.asm"
-include "stars.asm"
-include "background.asm"
+; include "stars.asm"
+include "background2.asm"
 include "tiles_constants.asm"
 include "assets.asm"
 include "intro.asm"

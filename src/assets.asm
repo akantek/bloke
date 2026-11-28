@@ -272,7 +272,7 @@ load_tile_color:
   ret
   
   
-  set_numbers_colors:
+set_numbers_colors:
   ; --- 1. Top Third ---
   ld de, $2008           ; VRAM Destination for Tile $01 (Offset $08)
   ld b, $0A              ; Loop 10 times (0 through 9)

@@ -446,4 +446,40 @@ _star_0_pattern:
   defb %00000000    ; Row 5
   defb %00000000    ; Row 6
   defb %00000000    ; Row 7
+_title_diag_top_right_pattern:
+  defb %00000001    ; Row 0
+  defb %00000011    ; Row 1
+  defb %00000111    ; Row 2
+  defb %00001111    ; Row 3
+  defb %00011111    ; Row 4
+  defb %00111111    ; Row 5
+  defb %01111111    ; Row 6
+  defb %11111111    ; Row 7
+_title_diag_top_left_pattern:
+  defb %10000000    ; Row 0
+  defb %11000000    ; Row 1
+  defb %11100000    ; Row 2
+  defb %11110000    ; Row 3
+  defb %11111000    ; Row 4
+  defb %11111100    ; Row 5
+  defb %11111110    ; Row 6
+  defb %11111111    ; Row 7
+_title_diag_bottom_right_pattern:
+  defb %11111111    ; Row 0
+  defb %11111110    ; Row 1
+  defb %11111100    ; Row 2
+  defb %11111000    ; Row 3
+  defb %11110000    ; Row 4
+  defb %11100000    ; Row 5
+  defb %11000000    ; Row 6
+  defb %10000000    ; Row 7
+_title_line_pattern:
+  defb %11111111    ; Row 0
+  defb %00000000    ; Row 1
+  defb %00000000    ; Row 2
+  defb %11111111    ; Row 3
+  defb %11111111    ; Row 4
+  defb %00000000    ; Row 5
+  defb %00000000    ; Row 6
+  defb %11111111    ; Row 7
 tile_patterns_end:
